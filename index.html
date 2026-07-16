@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GaLaBau Lernwelt</title>
+<style>
+  :root{
+    --bg:#f6f7f3; --bg2:#eef1ea; --card:#ffffff; --ink:#1a1d18; --muted:#697065; --line:#e4e6de;
+    --accent:#3f6f3a; --accent2:#5a7d2a; --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(30,40,20,.05);
+    --ok:#2f7d4f; --bad:#c0392b; --warn:#b5651d;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#12140e; --bg2:#181b12; --card:#1c1f17; --ink:#e9ebe3; --muted:#9aa08f; --line:#2a2e22;
+    --accent:#8fc07f; --accent2:#a7c96a; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    --ok:#8fc07f; --bad:#e57373; --warn:#d9a441;}}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .top .in{max-width:900px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
+  .brand{font-weight:700;letter-spacing:-.01em;font-size:1.05rem;display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none}
+  .brand .dot{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:inline-block}
+  .back{margin-left:auto;font-size:.85rem;color:var(--muted);text-decoration:none;border:1px solid var(--line);
+    background:var(--card);padding:6px 12px;border-radius:99px}
+  .back:hover{border-color:var(--accent);color:var(--ink)}
+  main{max-width:900px;margin:0 auto;padding:22px 18px 80px}
+  .hero h1{font-size:1.7rem;margin:.2em 0 .1em;letter-spacing:-.02em}
+  .hero p{color:var(--muted);margin:.2em 0 1.5em}
+  /* hub grid */
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  .tile{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:18px;box-shadow:var(--shadow);transition:transform .15s ease,border-color .15s ease;position:relative;overflow:hidden}
+  .tile:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--tc,var(--accent)) 55%,var(--line))}
+  .tile .emo{font-size:1.9rem;display:block;margin-bottom:8px}
+  .tile h3{margin:0 0 3px;font-size:1.12rem;letter-spacing:-.01em}
+  .tile p{margin:0;color:var(--muted);font-size:.88rem}
+  .tile .badge{position:absolute;top:16px;right:16px;font-size:.72rem;color:var(--tc,var(--accent));
+    background:color-mix(in srgb,var(--tc,var(--accent)) 12%,transparent);padding:2px 9px;border-radius:99px;font-weight:600}
+  .tile .bar{position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--tc,var(--accent))}
+  /* section headings */
+  h2.sec{font-size:1.15rem;margin:1.8em 0 .6em;display:flex;align-items:center;gap:8px}
+  .lead{color:var(--muted);margin:.1em 0 1.2em;font-size:1.02rem}
+  /* content cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:var(--shadow)}
+  .card h3{margin:.1em 0 .5em;font-size:1.05rem}
+  .card p{margin:.4em 0}
+  .card ul{margin:.4em 0;padding-left:22px}.card li{margin:3px 0}
+  .card table{width:100%;border-collapse:collapse;font-size:.92rem;margin:.5em 0;display:block;overflow-x:auto}
+  .card th,.card td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  .card th{color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
+  /* hover term */
+  .t{border-bottom:1px dotted var(--accent);cursor:help;position:relative}
+  .t:hover::after,.t.show::after{content:attr(data-en);position:absolute;left:0;bottom:135%;white-space:nowrap;
+    background:#222;color:#fff;padding:4px 9px;border-radius:7px;font-size:.78rem;z-index:40;box-shadow:0 3px 10px rgba(0,0,0,.4)}
+  .t:hover::before,.t.show::before{content:"";position:absolute;left:12px;bottom:125%;border:5px solid transparent;border-top-color:#222;z-index:40}
+  /* exam */
+  .qa{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 17px;margin:12px 0;box-shadow:var(--shadow)}
+  .qa .qtext{font-weight:600;margin-bottom:10px}
+  .qa .qtext b{color:var(--accent)}
+  textarea.mine{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);
+    padding:9px 11px;font:inherit;font-size:.92rem;resize:vertical;min-height:44px}
+  .qbtns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .btn{border:1px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:99px;padding:8px 14px;
+    font-size:.85rem;cursor:pointer;font-weight:500}
+  .btn:hover{border-color:var(--accent)}
+  .btn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .hints{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+  .hint{background:color-mix(in srgb,var(--warn) 12%,transparent);border-left:3px solid var(--warn);
+    border-radius:8px;padding:7px 11px;font-size:.9rem;animation:fade .25s ease}
+  .answer{margin-top:10px;background:color-mix(in srgb,var(--ok) 10%,transparent);border-left:3px solid var(--ok);
+    border-radius:8px;padding:10px 13px;font-size:.95rem}
+  @keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1}}
+  /* controls */
+  .controls{position:sticky;top:52px;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);
+    backdrop-filter:blur(8px);padding:10px 0;margin-bottom:6px}
+  #q{width:100%;padding:11px 14px;font-size:1rem;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:99px;
+    font-size:.83rem;cursor:pointer;white-space:nowrap}
+  .chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .count{color:var(--muted);font-size:.82rem;margin:6px 0 0}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;margin-bottom:12px}
+  .seg button{border:none;background:var(--card);color:var(--ink);padding:8px 16px;cursor:pointer;font-size:.9rem}
+  .seg button.on{background:var(--accent);color:#fff}
+  /* plant/tool cards */
+  .pgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+  .pc{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pc,var(--accent));border-radius:12px;
+    padding:12px 13px;box-shadow:var(--shadow)}
+  .pc img{width:100%;height:140px;object-fit:cover;border-radius:9px;margin-bottom:8px;background:var(--bg2)}
+  .pc .de{font-weight:650;font-size:1.02rem;line-height:1.25}
+  .pc .bot{font-style:italic;color:var(--muted);font-size:.86rem}
+  .pc .ln{font-size:.83rem;margin-top:4px}.pc .ln b{color:var(--muted);font-weight:600}
+  .pc .use{font-size:.83rem;color:var(--ink);opacity:.85;margin-top:4px}
+  .bel{display:inline-block;font-size:.7rem;color:#fff;padding:1px 8px;border-radius:99px;margin-left:4px}
+  .sw{display:inline-block;width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.25);margin-right:4px;vertical-align:-1px}
+  .tag{display:inline-block;font-size:.7rem;background:var(--bg2);border:1px solid var(--line);border-radius:99px;padding:1px 8px;margin-left:5px}
+  /* flashcard */
+  .fcard{max-width:460px;margin:8px auto;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:26px 22px;box-shadow:var(--shadow);text-align:center;min-height:200px;display:flex;flex-direction:column;justify-content:center}
+  .fcard .big{font-size:1.7rem;font-weight:650}
+  .fcard img{max-width:100%;max-height:220px;object-fit:contain;border-radius:10px;margin:0 auto 6px}
+  mark{background:#ffe08a;color:#000;border-radius:3px;padding:0 2px}
+  footer{max-width:900px;margin:0 auto;padding:0 18px 50px;color:var(--muted);font-size:.82rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="top"><div class="in">
+  <a class="brand" href="#/"><span class="dot"></span> GaLaBau Lernwelt</a>
+  <a class="back" href="#/" id="backBtn" hidden>← Übersicht</a>
+</div></div>
+<main id="app"></main>
+<footer>Interaktives Lernmaterial · aus dem Unterricht digitalisiert · <span class="t" data-en="hover a word for English">bewege die Maus über unterstrichene Wörter</span></footer>
+
+<script src="assets/plants.js"></script>
+<script src="assets/topics.js"></script>
+<script>
+/* ============ data ============ */
+const PLANTS=(window.PLANTS&&window.PLANTS.plants)||[];
+const TOPICS=window.TOPICS||[];
+const TById=Object.fromEntries(TOPICS.map(t=>[t.id,t]));
+const CATS={hecke:["Hecken","#3f6f3a"],baum:["Bäume","#5a7d2a"],strauch:["Sträucher","#7a8b1f"],staude:["Stauden","#b5651d"],
+ gras:["Gräser","#a08a3c"],boden:["Bodendecker","#4c8b6a"],kletter:["Kletterpflanzen","#2f7a7a"],konifere:["Koniferen","#2f5f4a"],
+ rose:["Rosen","#b03b5a"],zwiebel:["Zwiebelpflanzen","#8a5cb0"],wechsel:["Wechselflor","#c26a2e"]};
+const BELCOL={"immergrün":"#2f6f4a","sommergrün":"#b5651d","halbimmergrün":"#5a7d2a"};
+const COLW=[["gelbgrün","#9bbf4a"],["blau-schwarz","#2c3a4a"],["weiß","#fff"],["gelb","#e8c33a"],["rosa","#e79ab0"],
+ ["violett","#8e5bb0"],["lila","#8e5bb0"],["blau","#4a6fb0"],["orange","#e08a2e"],["rot","#c0392b"],["schwarz","#333"],
+ ["grünlich","#6a8f3c"],["grün","#6a8f3c"],["braun","#7b5e3b"],["silbrig","#b8bdb0"]];
+
+const WILD=[
+ {de:"Hundsrose",bot:"Rosa canina",tr:"Dornig; rosa Blüten; rote Hagebutten",nat:"✅"},
+ {de:"Gewöhnlicher Schneeball",bot:"Viburnum opulus",tr:"Weiße Blüten; rote Beeren",nat:"✅",img:"img/strauch-schneeball.jpg"},
+ {de:"Wolliger Schneeball",bot:"Viburnum lantana",tr:"Filzige Blätter; rot → schwarz",nat:"✅"},
+ {de:"Sanddorn",bot:"Hippophae rhamnoides",tr:"Silbrig; dornig; orange Beeren",nat:"✅"},
+ {de:"Gewöhnlicher Liguster",bot:"Ligustrum vulgare",tr:"Halbimmergrün; schwarze Beeren",nat:"✅",img:"img/hecke-liguster.jpg"},
+ {de:"Berberitze",bot:"Berberis vulgaris",tr:"Dornig; rote saure Beeren",nat:"✅"},
+ {de:"Roter Hartriegel",bot:"Cornus sanguinea",tr:"Rote Winterzweige",nat:"✅"},
+ {de:"Kornelkirsche",bot:"Cornus mas",tr:"Sehr früh gelb; essbare rote Früchte",nat:"✅"},
+ {de:"Schlehe",bot:"Prunus spinosa",tr:"Sehr dornig; blau-schwarze Schlehen",nat:"✅"},
+ {de:"Schwarzer Holunder",bot:"Sambucus nigra",tr:"Weiße Dolden; schwarze Beeren",nat:"✅"},
+ {de:"Pfaffenhütchen",bot:"Euonymus europaeus",tr:"Rosa-orange Frucht; giftig",nat:"✅"},
+ {de:"Besenginster",bot:"Cytisus scoparius",tr:"Grüne Ruten; gelbe Blüten",nat:"✅"},
+ {de:"Stechpalme",bot:"Ilex aquifolium",tr:"Immergrün; stachelig; rote Beeren",nat:"✅"},
+ {de:"Buchsbaum",bot:"Buxus sempervirens",tr:"Immergrün; Formhecke",nat:"⚠️",img:"img/hecke-buchsbaum.jpg"},
+ {de:"Alpen-Johannisbeere",bot:"Ribes alpinum",tr:"Schatten; kleine rote Beeren",nat:"✅"},
+ {de:"Hasel",bot:"Corylus avellana",tr:"Kätzchen; essbare Nüsse",nat:"✅"},
+ {de:"Gemeiner Flieder",bot:"Syringa vulgaris",tr:"Duftend violett; NICHT heimisch",nat:"❌",img:"img/strauch-flieder.jpg"}
+];
+const WERK=[
+ {n:1,img:"img/box1.jpg",t:[["Bügelsäge","bow saw","Handsäge mit Bügel; schnelles Sägen von Ästen"],["Schaufel (Spitz)","pointed shovel","Graben, festen Boden lösen"],["Schaufel (Flach)","flat shovel","Loses Material aufnehmen"],["Schaufel (Rund)","round shovel","Universell schaufeln"],["Teleskopsäge","pole saw","Hohe Äste vom Boden schneiden"],["Fuchsschwanz","handsaw","Holz und dicke Äste"],["Besen","broom","Kehren"]]},
+ {n:2,img:"img/box2.jpg",t:[["Bauspaten","digging spade","Ausheben in festem Boden"],["Rodespaten","grubbing spade","Wurzeln roden, schmale Gräben"],["Unkrauthacke","weeding hoe","Unkraut hacken, Boden lockern"],["Plastikfederbesen","fan rake","Laub & Schnittgut zusammenrechen"],["Grubber","cultivator","Beet-Erde lockern"],["Astsäge","pruning saw","Dicke Äste"],["Astschere","loppers","Dickere Äste mit Hebel"],["Handheckenschere","hedge shears","Formschnitt kleiner Hecken"],["Axt","axe","Holz spalten"],["Handgruber","hand cultivator","Beete lockern, Unkraut auskratzen"],["Unkrautstecher","weed puller","Pfahlwurzeln ausstechen"],["Eimer","bucket","Tragen"]]},
+ {n:3,img:"img/box3.jpg",t:[["Rasenrechen","lawn rake","Laub & Rasenschnitt"],["Alurechen","aluminium rake","Boden ebnen, Material ziehen"],["Holzrechen","wooden rake","Schonend für Rasen/Heu"],["Eisenharken","iron rake","Boden ebnen, Steine ausziehen"],["Besen","broom","Kehren"],["Dreihaken","three-prong cultivator","Harten Boden aufbrechen"]]},
+ {n:4,img:"img/box4.jpg",t:[["Seile","ropes","Sichern, Binden, Ziehen"],["Knieschoner","knee pads","Knieschutz beim Pflastern/Pflanzen"],["Schutzbrillen","safety goggles","Augenschutz"],["Schleifpapier","sandpaper","Schärfen, Glätten"],["Grabegabel","digging fork","Boden lockern, Wurzeln heben"],["Forken","forks","Schnittgut & Mulch wenden"],["Unkrautschuffel","scuffle hoe","Unkraut flach abschneiden"],["Spitzhaken","pickaxe","Steinigen Boden aufbrechen"],["Besen","broom","Kehren"]]}
+];
+
+/* hub tiles */
+const HUB=[
+ {emo:"🌿",title:"Pflanzen",sub:"293 Arten – Namen, Blatt, Farben",route:"#/pflanzen",c:"#3f6f3a",badge:PLANTS.length},
+ {emo:"🌳",title:"Wildhecke",sub:"17 heimische Heckensträucher",route:"#/wildhecke",c:"#5a7d2a",badge:WILD.length},
+ {emo:"🧰",title:"Werkzeugkisten",sub:"Werkzeuge DE/EN + Verwendung",route:"#/werkzeuge",c:"#7a5c33",badge:WERK.reduce((a,b)=>a+b.t.length,0)},
+ {emo:"🧱",title:"Wegebau",sub:"Schichtenaufbau & Pflaster",route:"#/t/wegebau",c:"#8a6d3b",badge:examCount("wegebau")},
+ {emo:"🌱",title:"Rasen",sub:"Anlage & Pflege",route:"#/t/rasen",c:"#4c8b3a",badge:examCount("rasen")},
+ {emo:"📋",title:"Pflanzenkenntnisse",sub:"Prüfungswissen Pflanzen",route:"#/t/pflanzenkenntnisse",c:"#3f6f5a",badge:examCount("pflanzenkenntnisse")},
+ {emo:"💶",title:"Sozialversicherung",sub:"Die 5 Prinzipien",route:"#/t/sozialversicherung",c:"#b5651d",badge:examCount("sozialversicherung")}
+];
+function examCount(id){const t=TById[id];return t?t.exam.length+" Fragen":"";}
+
+/* ============ helpers ============ */
+const app=document.getElementById("app"), backBtn=document.getElementById("backBtn");
+const esc=s=>(""+(s==null?"":s)).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+function hl(s,t){s=""+(s||"");if(!t)return esc(s);const i=s.toLowerCase().indexOf(t);if(i<0)return esc(s);
+ return esc(s.slice(0,i))+"<mark>"+esc(s.slice(i,i+t.length))+"</mark>"+esc(s.slice(i+t.length));}
+function swatches(txt){const t=(txt||"").toLowerCase(),seen=[];for(const[w,h]of COLW){if(t.includes(w)&&!seen.includes(h))seen.push(h);}
+ return seen.slice(0,3).map(h=>`<span class="sw" style="background:${h}"></span>`).join("")+esc(txt||"—");}
+function bindTips(){document.querySelectorAll(".t").forEach(el=>{if(el._b)return;el._b=1;
+ el.addEventListener("click",e=>{document.querySelectorAll(".t.show").forEach(o=>{if(o!==el)o.classList.remove("show");});el.classList.toggle("show");});});}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* ============ router ============ */
+function render(){
+  const h=location.hash||"#/";
+  backBtn.hidden=(h==="#/"||h==="");
+  window.scrollTo(0,0);
+  if(h==="#/"||h==="") return renderHub();
+  if(h==="#/pflanzen") return renderPflanzen();
+  if(h==="#/wildhecke") return renderWild();
+  if(h==="#/werkzeuge") return renderWerk();
+  if(h.startsWith("#/t/")) return renderTopic(h.slice(4));
+  renderHub();
+}
+window.addEventListener("hashchange",render);
+
+/* ============ hub ============ */
+function renderHub(){
+  app.innerHTML=`<div class="hero"><h1>GaLaBau Lernwelt 🌿</h1>
+    <p>Interaktives Lernmaterial aus dem Unterricht – Spickzettel, Prüfungsfragen mit Hinweisen und Pflanzenwissen.
+    Tippe/klicke auf ein Thema.</p></div>
+    <div class="grid">${HUB.map(t=>`<a class="tile" href="${t.route}" style="--tc:${t.c}">
+      <span class="bar"></span>${t.badge?`<span class="badge">${t.badge}</span>`:""}
+      <span class="emo">${t.emo}</span><h3>${t.title}</h3><p>${t.sub}</p></a>`).join("")}</div>`;
+  bindTips();
+}
+
+/* ============ class topic: tutorial + interactive exam ============ */
+function renderTopic(id){
+  const t=TById[id]; if(!t){renderHub();return;}
+  app.innerHTML=`<div class="hero"><h1>${esc(t.title)}</h1><p class="lead">${esc(t.intro)}</p></div>
+    <h2 class="sec">📖 Spickzettel</h2>
+    ${t.tutorial.map(s=>`<div class="card"><h3>${esc(s.heading)}</h3>${s.html}</div>`).join("")}
+    <h2 class="sec">📝 Prüfungsfragen <span class="count">– Antworten sind versteckt. Erst selbst überlegen!</span></h2>
+    <div id="exam"></div>`;
+  const ex=document.getElementById("exam");
+  t.exam.forEach((e,i)=>ex.appendChild(examCard(e,i+1)));
+  bindTips();
+}
+function examCard(e,num){
+  const d=document.createElement("div");d.className="qa";
+  d.innerHTML=`<div class="qtext"><b>${num}.</b> ${esc(e.q)}</div>
+    <textarea class="mine" placeholder="Deine Antwort (optional zum Selbsttest) …"></textarea>
+    <div class="qbtns">
+      ${(e.hints&&e.hints.length)?`<button class="btn hb">💡 Hinweis</button>`:""}
+      <button class="btn p ab">Antwort zeigen</button>
+    </div>
+    <div class="hints"></div>
+    <div class="answer" hidden></div>`;
+  const hintsBox=d.querySelector(".hints"), ansBox=d.querySelector(".answer");
+  const hb=d.querySelector(".hb"), ab=d.querySelector(".ab");
+  let hi=0;
+  if(hb) hb.onclick=()=>{
+    if(hi>=e.hints.length)return;
+    const el=document.createElement("div");el.className="hint";el.innerHTML="💡 "+e.hints[hi];hintsBox.appendChild(el);
+    hi++; if(hi>=e.hints.length){hb.textContent="Alle Hinweise gezeigt";hb.disabled=true;} else hb.textContent=`💡 Hinweis ${hi+1}/${e.hints.length}`;
+    bindTips();
+  };
+  let shown=false;
+  ab.onclick=()=>{shown=!shown;ansBox.hidden=!shown;ab.textContent=shown?"Antwort verbergen":"Antwort zeigen";
+    if(shown&&!ansBox.innerHTML){ansBox.innerHTML="<b>Antwort:</b> "+e.answer;bindTips();}};
+  return d;
+}
+
+/* ============ Pflanzen (browse + flashcards) ============ */
+function renderPflanzen(){
+  app.innerHTML=`<div class="hero"><h1>🌿 Pflanzen</h1><p class="lead">${PLANTS.length} Arten mit Blattstellung, Belaubung und Frucht-/Blütenfarbe.</p></div>
+    <div class="seg"><button id="mBrowse" class="on">Stöbern</button><button id="mCards">Karteikarten</button></div>
+    <div id="pbody"></div>`;
+  document.getElementById("mBrowse").onclick=()=>{setSeg(0);plantBrowse();};
+  document.getElementById("mCards").onclick=()=>{setSeg(1);plantCards();};
+  plantBrowse();
+}
+function setSeg(i){document.getElementById("mBrowse").classList.toggle("on",i===0);document.getElementById("mCards").classList.toggle("on",i===1);}
+function plantBrowse(){
+  const cats=Object.keys(CATS);
+  document.getElementById("pbody").innerHTML=`
+    <div class="controls"><input id="q" type="search" placeholder="🔎 suchen (Deutsch, Botanisch) …" autocomplete="off">
+    <div class="chips" id="chips"><button class="chip on" data-c="alle">Alle</button>
+    ${cats.map(c=>`<button class="chip" data-c="${c}">${CATS[c][0]}</button>`).join("")}</div>
+    <div class="count" id="cnt"></div></div><div class="pgrid" id="pg"></div>`;
+  let active="alle";
+  const q=document.getElementById("q"),pg=document.getElementById("pg"),cnt=document.getElementById("cnt");
+  document.getElementById("chips").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;
+    active=b.dataset.c;[...e.currentTarget.children].forEach(x=>x.classList.toggle("on",x===b));draw();});
+  q.addEventListener("input",draw);
+  function draw(){const t=q.value.trim().toLowerCase();pg.innerHTML="";let n=0;
+    for(const p of PLANTS){if(active!=="alle"&&p.category!==active)continue;
+      if(t&&!((p.de+" "+p.botanical+" "+(p.use||"")).toLowerCase().includes(t)))continue;n++;
+      const col=(CATS[p.category]||["",""])[1];const d=document.createElement("div");d.className="pc";d.style.setProperty("--pc",col);
+      d.innerHTML=(p.image?`<img loading="lazy" src="${p.image}" alt="">`:"")+
+        `<div class="de">${hl(p.de,t)}${p.foliage?`<span class="bel" style="background:${BELCOL[(p.foliage||'').split(' ')[0]]||'#777'}">${esc(p.foliage)}</span>`:""}</div>
+        <div class="bot">${hl(p.botanical,t)}</div>
+        ${p.leaf_arrangement?`<div class="ln"><b>Blatt:</b> ${esc(p.leaf_arrangement)}${p.leaf_shape?", "+esc(p.leaf_shape):""}</div>`:""}
+        ${p.flower_color?`<div class="ln"><b>Blüte:</b> ${swatches(p.flower_color)}</div>`:""}
+        ${p.fruit_color?`<div class="ln"><b>Frucht:</b> ${swatches(p.fruit_color)}</div>`:""}
+        <div class="use">${hl(p.use||"",t)}</div>`;
+      pg.appendChild(d);}
+    cnt.textContent=`${n} von ${PLANTS.length} Pflanzen`;}
+  draw();
+}
+function plantCards(){
+  const body=document.getElementById("pbody");
+  let deck=shuffle(PLANTS),i=0,flip=false;
+  function show(){const p=deck[i];flip=false;
+    body.innerHTML=`<div class="fcard" id="fc">
+      ${p.image?`<img src="${p.image}" alt="">`:""}
+      <div class="big">${esc(p.de)}</div>
+      <div id="fb" style="color:var(--muted)">Wie heißt sie botanisch?</div>
+      </div>
+      <div style="text-align:center;margin-top:12px">
+        <button class="btn p" id="flip">Antwort</button>
+        <button class="btn" id="next">Nächste →</button>
+        <div class="count" style="margin-top:8px">Karte ${i+1} / ${deck.length}</div>
+      </div>`;
+    document.getElementById("flip").onclick=()=>{flip=!flip;const fb=document.getElementById("fb");
+      if(flip){fb.innerHTML=`<div style="font-style:italic;font-size:1.15rem;color:var(--ink)">${esc(p.botanical)}</div>
+        ${p.foliage?`<span class="bel" style="background:${BELCOL[(p.foliage||'').split(' ')[0]]||'#777'}">${esc(p.foliage)}</span> `:""}
+        <div style="font-size:.9rem;margin-top:6px">${esc(p.use||"")}</div>`;}
+      else fb.innerHTML="Wie heißt sie botanisch?";};
+    document.getElementById("next").onclick=()=>{i=(i+1)%deck.length;show();};}
+  show();
+}
+
+/* ============ Wildhecke ============ */
+function renderWild(){
+  app.innerHTML=`<div class="hero"><h1>🌳 Wildhecke</h1>
+    <p class="lead">Deine 17 heimischen Heckensträucher (im Unterricht gelernt). ✅ heimisch · ❌ nicht heimisch · ⚠️ nur lokal.</p></div>
+    <div class="pgrid">${WILD.map(w=>`<div class="pc" style="--pc:#5a7d2a">
+      ${w.img?`<img loading="lazy" src="${w.img}" alt="">`:""}
+      <div class="de">${esc(w.de)} <span class="tag">${w.nat}</span></div>
+      <div class="bot">${esc(w.bot)}</div>
+      <div class="use">${esc(w.tr)}</div></div>`).join("")}</div>`;
+}
+
+/* ============ Werkzeugkisten ============ */
+function renderWerk(){
+  app.innerHTML=`<div class="hero"><h1>🧰 Werkzeugkisten</h1>
+    <p class="lead">Die 4 Kisten aus dem Geräteschuppen · Deutsch / English + Verwendung.</p></div>
+    <div class="controls"><input id="q" type="search" placeholder="🔎 Werkzeug suchen …" autocomplete="off"><div class="count" id="cnt"></div></div>
+    <div id="wb"></div>`;
+  const q=document.getElementById("q"),wb=document.getElementById("wb"),cnt=document.getElementById("cnt");
+  const total=WERK.reduce((a,b)=>a+b.t.length,0);
+  function draw(){const t=q.value.trim().toLowerCase();wb.innerHTML="";let n=0;
+    for(const b of WERK){const rows=b.t.filter(r=>!t||(r[0]+" "+r[1]+" "+r[2]).toLowerCase().includes(t));if(!rows.length)continue;n+=rows.length;
+      const c=document.createElement("div");c.className="card";
+      c.innerHTML=`<div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">
+        <img loading="lazy" src="${b.img}" alt="BOX ${b.n}" style="width:56px;height:56px;object-fit:cover;border-radius:9px;border:1px solid var(--line)">
+        <h3 style="margin:0">BOX ${b.n} <span class="tag">${rows.length}</span></h3></div>
+        <table><thead><tr><th>Deutsch</th><th>English</th><th>Verwendung</th></tr></thead><tbody>
+        ${rows.map(r=>`<tr><td><b>${hl(r[0],t)}</b></td><td style="color:var(--muted);font-style:italic">${hl(r[1],t)}</td><td>${hl(r[2],t)}</td></tr>`).join("")}
+        </tbody></table>`;
+      wb.appendChild(c);}
+    cnt.textContent=`${n} von ${total} Werkzeugen · 4 Kisten`;}
+  q.addEventListener("input",draw);draw();
+}
+
+render();
+</script>
+</body>
+</html>
