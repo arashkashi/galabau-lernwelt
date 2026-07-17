@@ -21,22 +21,22 @@
   a{color:inherit}
   .top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
     backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .top .in{max-width:900px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
+  .top .in{max-width:820px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
   .brand{font-weight:700;letter-spacing:-.01em;font-size:1.05rem;display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none}
   .brand .dot{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:inline-block}
   .back{margin-left:auto;font-size:.85rem;color:var(--muted);text-decoration:none;border:1px solid var(--line);
-    background:var(--card);padding:6px 12px;border-radius:99px}
+    background:var(--card);padding:6px 12px;border-radius:99px;cursor:pointer;font-family:inherit}
   .back:hover{border-color:var(--accent);color:var(--ink)}
-  main{max-width:900px;margin:0 auto;padding:22px 18px 80px}
+  main{max-width:820px;margin:0 auto;padding:22px 18px 80px}
   .hero h1{font-size:1.7rem;margin:.2em 0 .1em;letter-spacing:-.02em}
-  .hero p{color:var(--muted);margin:.2em 0 1.5em}
+  .hero p{color:var(--muted);margin:.2em 0 1.4em}
   /* hub grid */
-  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
   .tile{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:16px;
-    padding:18px;box-shadow:var(--shadow);transition:transform .15s ease,border-color .15s ease;position:relative;overflow:hidden}
+    padding:20px;box-shadow:var(--shadow);transition:transform .15s ease,border-color .15s ease;position:relative;overflow:hidden}
   .tile:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--tc,var(--accent)) 55%,var(--line))}
-  .tile .emo{font-size:1.9rem;display:block;margin-bottom:8px}
-  .tile h3{margin:0 0 3px;font-size:1.12rem;letter-spacing:-.01em}
+  .tile .emo{font-size:2rem;display:block;margin-bottom:10px}
+  .tile h3{margin:0 0 3px;font-size:1.16rem;letter-spacing:-.01em}
   .tile p{margin:0;color:var(--muted);font-size:.88rem}
   .tile .badge{position:absolute;top:16px;right:16px;font-size:.72rem;color:var(--tc,var(--accent));
     background:color-mix(in srgb,var(--tc,var(--accent)) 12%,transparent);padding:2px 9px;border-radius:99px;font-weight:600}
@@ -44,6 +44,8 @@
   /* section headings */
   h2.sec{font-size:1.15rem;margin:1.8em 0 .6em;display:flex;align-items:center;gap:8px}
   .lead{color:var(--muted);margin:.1em 0 1.2em;font-size:1.02rem}
+  .note{font-size:.82rem;color:var(--muted);background:color-mix(in srgb,var(--warn) 9%,transparent);
+    border-left:3px solid var(--warn);border-radius:8px;padding:8px 12px;margin:0 0 14px}
   /* content cards */
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:var(--shadow)}
   .card h3{margin:.1em 0 .5em;font-size:1.05rem}
@@ -65,7 +67,7 @@
     padding:9px 11px;font:inherit;font-size:.92rem;resize:vertical;min-height:44px}
   .qbtns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
   .btn{border:1px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:99px;padding:8px 14px;
-    font-size:.85rem;cursor:pointer;font-weight:500}
+    font-size:.85rem;cursor:pointer;font-weight:500;font-family:inherit}
   .btn:hover{border-color:var(--accent)}
   .btn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
   .btn:disabled{opacity:.5;cursor:default}
@@ -80,76 +82,86 @@
     backdrop-filter:blur(8px);padding:10px 0;margin-bottom:6px}
   #q{width:100%;padding:11px 14px;font-size:1rem;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
   .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
-  .chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:99px;
-    font-size:.83rem;cursor:pointer;white-space:nowrap}
+  .chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 13px;border-radius:99px;
+    font-size:.85rem;cursor:pointer;white-space:nowrap}
   .chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
   .count{color:var(--muted);font-size:.82rem;margin:6px 0 0}
-  .seg{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;margin-bottom:12px}
-  .seg button{border:none;background:var(--card);color:var(--ink);padding:8px 16px;cursor:pointer;font-size:.9rem}
-  .seg button.on{background:var(--accent);color:#fff}
-  /* plant/tool cards */
-  .pgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
-  .pc{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pc,var(--accent));border-radius:12px;
-    padding:12px 13px;box-shadow:var(--shadow)}
-  .pc img{width:100%;height:140px;object-fit:cover;border-radius:9px;margin-bottom:8px;background:var(--bg2)}
-  .pc .de{font-weight:650;font-size:1.02rem;line-height:1.25}
-  .pc .bot{font-style:italic;color:var(--muted);font-size:.86rem}
-  .pc .ln{font-size:.83rem;margin-top:4px}.pc .ln b{color:var(--muted);font-weight:600}
-  .pc .use{font-size:.83rem;color:var(--ink);opacity:.85;margin-top:4px}
-  .bel{display:inline-block;font-size:.7rem;color:#fff;padding:1px 8px;border-radius:99px;margin-left:4px}
-  .sw{display:inline-block;width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.25);margin-right:4px;vertical-align:-1px}
-  .tag{display:inline-block;font-size:.7rem;background:var(--bg2);border:1px solid var(--line);border-radius:99px;padding:1px 8px;margin-left:5px}
-  /* flashcard */
-  .fcard{max-width:460px;margin:8px auto;background:var(--card);border:1px solid var(--line);border-radius:18px;
-    padding:26px 22px;box-shadow:var(--shadow);text-align:center;min-height:200px;display:flex;flex-direction:column;justify-content:center}
-  .fcard .big{font-size:1.7rem;font-weight:650}
-  .fcard img{max-width:100%;max-height:220px;object-fit:contain;border-radius:10px;margin:0 auto 6px}
+  /* plant grid + card */
+  .pgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(158px,1fr))}
+  .pc{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:10px;box-shadow:var(--shadow);transition:transform .12s ease,border-color .12s ease}
+  .pc:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .pc img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;margin-bottom:8px;background:var(--bg2)}
+  .pc .ph{width:100%;aspect-ratio:4/3;border-radius:10px;margin-bottom:8px;background:linear-gradient(135deg,var(--bg2),var(--line));
+    display:flex;align-items:center;justify-content:center;font-size:1.7rem;opacity:.6}
+  .pc .de{font-weight:650;font-size:.98rem;line-height:1.2}
+  .pc .bot{font-style:italic;color:var(--muted);font-size:.82rem;margin-top:1px}
+  .flag{display:inline-block;font-size:.68rem;padding:1px 7px;border-radius:99px;margin-top:6px;font-weight:600}
+  .flag.warn{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+  .flag.g{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+  .tag{display:inline-block;font-size:.72rem;background:var(--bg2);border:1px solid var(--line);border-radius:99px;padding:2px 10px;margin:0 5px 5px 0}
+  /* plant detail */
+  .dhero{width:100%;max-height:340px;object-fit:cover;border-radius:16px;background:var(--bg2);box-shadow:var(--shadow)}
+  .dph{width:100%;height:200px;border-radius:16px;background:linear-gradient(135deg,var(--bg2),var(--line));
+    display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:.5}
+  .dname{font-size:1.7rem;margin:.5em 0 .05em;letter-spacing:-.02em}
+  .dbot{font-style:italic;color:var(--muted);font-size:1.1rem;margin:0 0 .3em}
+  .dmeta{margin:.4em 0 1em;font-size:.9rem;color:var(--muted)}
+  .maplink{display:inline-flex;align-items:center;gap:6px;text-decoration:none;background:var(--accent);color:#fff;
+    border-radius:99px;padding:9px 16px;font-size:.9rem;font-weight:600;margin-top:6px}
+  /* navlist (themen) */
+  .nav{display:flex;flex-direction:column;gap:10px}
+  .nav a{display:flex;align-items:center;gap:14px;text-decoration:none;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);transition:border-color .12s ease,transform .12s ease}
+  .nav a:hover{border-color:var(--accent);transform:translateX(2px)}
+  .nav .em{font-size:1.7rem}
+  .nav .tx b{font-size:1.08rem;letter-spacing:-.01em}
+  .nav .tx span{display:block;color:var(--muted);font-size:.85rem}
+  .nav .ar{margin-left:auto;color:var(--muted)}
+  /* Namen-Test */
+  .test{max-width:520px;margin:0 auto}
+  .testcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow);text-align:center}
+  .testcard img{max-width:100%;max-height:230px;object-fit:contain;border-radius:12px;margin:0 auto 8px}
+  .testcard .qde{font-size:1.5rem;font-weight:700;margin:6px 0 2px}
+  .testcard .qfam{color:var(--muted);font-size:.86rem;margin-bottom:12px}
+  #ans{width:100%;padding:12px 14px;font-size:1.1rem;border:2px solid var(--line);border-radius:12px;
+    background:var(--bg);color:var(--ink);text-align:center;font-style:italic;font-family:inherit}
+  #ans:focus{outline:none;border-color:var(--accent)}
+  .simwrap{margin:12px 0 4px}
+  .simtrack{height:12px;border-radius:99px;background:var(--bg2);overflow:hidden}
+  .simfill{height:100%;width:0;border-radius:99px;transition:width .12s ease,background .12s ease}
+  .simtxt{font-size:.82rem;color:var(--muted);margin-top:5px;min-height:1.2em}
+  .verdict{margin-top:12px;border-radius:12px;padding:12px;font-size:1rem;animation:fade .2s ease}
+  .verdict.ok{background:color-mix(in srgb,var(--ok) 13%,transparent);border:1px solid var(--ok)}
+  .verdict.no{background:color-mix(in srgb,var(--bad) 11%,transparent);border:1px solid var(--bad)}
+  .verdict .cor{font-style:italic;font-size:1.15rem;font-weight:600}
+  .score{text-align:center;color:var(--muted);font-size:.86rem;margin-top:14px}
   mark{background:#ffe08a;color:#000;border-radius:3px;padding:0 2px}
-  footer{max-width:900px;margin:0 auto;padding:0 18px 50px;color:var(--muted);font-size:.82rem;text-align:center}
+  footer{max-width:820px;margin:0 auto;padding:0 18px 50px;color:var(--muted);font-size:.82rem;text-align:center}
 </style>
 </head>
 <body>
 <div class="top"><div class="in">
   <a class="brand" href="#/"><span class="dot"></span> GaLaBau Lernwelt</a>
-  <a class="back" href="#/" id="backBtn" hidden>← Übersicht</a>
+  <button class="back" id="backBtn" hidden>← zurück</button>
 </div></div>
 <main id="app"></main>
-<footer>Interaktives Lernmaterial · aus dem Unterricht digitalisiert · <span class="t" data-en="hover a word for English">bewege die Maus über unterstrichene Wörter</span></footer>
+<footer>Interaktives Lernmaterial · aus dem Unterricht &amp; Treptower Park digitalisiert · <span class="t" data-en="hover a word for English">bewege die Maus über unterstrichene Wörter</span></footer>
 
 <script src="assets/plants.js"></script>
+<script src="assets/cards.js"></script>
 <script src="assets/topics.js"></script>
 <script>
 /* ============ data ============ */
-const PLANTS=(window.PLANTS&&window.PLANTS.plants)||[];
+const PLANTS=window.PLANTS||[];
+const CARDS=window.CARDS||{};
 const TOPICS=window.TOPICS||[];
 const TById=Object.fromEntries(TOPICS.map(t=>[t.id,t]));
-const CATS={hecke:["Hecken","#3f6f3a"],baum:["Bäume","#5a7d2a"],strauch:["Sträucher","#7a8b1f"],staude:["Stauden","#b5651d"],
- gras:["Gräser","#a08a3c"],boden:["Bodendecker","#4c8b6a"],kletter:["Kletterpflanzen","#2f7a7a"],konifere:["Koniferen","#2f5f4a"],
- rose:["Rosen","#b03b5a"],zwiebel:["Zwiebelpflanzen","#8a5cb0"],wechsel:["Wechselflor","#c26a2e"]};
-const BELCOL={"immergrün":"#2f6f4a","sommergrün":"#b5651d","halbimmergrün":"#5a7d2a"};
-const COLW=[["gelbgrün","#9bbf4a"],["blau-schwarz","#2c3a4a"],["weiß","#fff"],["gelb","#e8c33a"],["rosa","#e79ab0"],
- ["violett","#8e5bb0"],["lila","#8e5bb0"],["blau","#4a6fb0"],["orange","#e08a2e"],["rot","#c0392b"],["schwarz","#333"],
- ["grünlich","#6a8f3c"],["grün","#6a8f3c"],["braun","#7b5e3b"],["silbrig","#b8bdb0"]];
+/* test pool: high-confidence Park plants + all Wildhecke (curated class list) */
+const TESTPOOL=PLANTS.filter(p=>p.cats.includes("hecke")||(p.cats.includes("trep")&&p.conf==="high"));
+const TICON={wegebau:"🧱",rasen:"🌱",pflanzenkenntnisse:"📋",sozialversicherung:"💶"};
 
-const WILD=[
- {de:"Hundsrose",bot:"Rosa canina",tr:"Dornig; rosa Blüten; rote Hagebutten",nat:"✅"},
- {de:"Gewöhnlicher Schneeball",bot:"Viburnum opulus",tr:"Weiße Blüten; rote Beeren",nat:"✅",img:"img/strauch-schneeball.jpg"},
- {de:"Wolliger Schneeball",bot:"Viburnum lantana",tr:"Filzige Blätter; rot → schwarz",nat:"✅"},
- {de:"Sanddorn",bot:"Hippophae rhamnoides",tr:"Silbrig; dornig; orange Beeren",nat:"✅"},
- {de:"Gewöhnlicher Liguster",bot:"Ligustrum vulgare",tr:"Halbimmergrün; schwarze Beeren",nat:"✅",img:"img/hecke-liguster.jpg"},
- {de:"Berberitze",bot:"Berberis vulgaris",tr:"Dornig; rote saure Beeren",nat:"✅"},
- {de:"Roter Hartriegel",bot:"Cornus sanguinea",tr:"Rote Winterzweige",nat:"✅"},
- {de:"Kornelkirsche",bot:"Cornus mas",tr:"Sehr früh gelb; essbare rote Früchte",nat:"✅"},
- {de:"Schlehe",bot:"Prunus spinosa",tr:"Sehr dornig; blau-schwarze Schlehen",nat:"✅"},
- {de:"Schwarzer Holunder",bot:"Sambucus nigra",tr:"Weiße Dolden; schwarze Beeren",nat:"✅"},
- {de:"Pfaffenhütchen",bot:"Euonymus europaeus",tr:"Rosa-orange Frucht; giftig",nat:"✅"},
- {de:"Besenginster",bot:"Cytisus scoparius",tr:"Grüne Ruten; gelbe Blüten",nat:"✅"},
- {de:"Stechpalme",bot:"Ilex aquifolium",tr:"Immergrün; stachelig; rote Beeren",nat:"✅"},
- {de:"Buchsbaum",bot:"Buxus sempervirens",tr:"Immergrün; Formhecke",nat:"⚠️",img:"img/hecke-buchsbaum.jpg"},
- {de:"Alpen-Johannisbeere",bot:"Ribes alpinum",tr:"Schatten; kleine rote Beeren",nat:"✅"},
- {de:"Hasel",bot:"Corylus avellana",tr:"Kätzchen; essbare Nüsse",nat:"✅"},
- {de:"Gemeiner Flieder",bot:"Syringa vulgaris",tr:"Duftend violett; NICHT heimisch",nat:"❌",img:"img/strauch-flieder.jpg"}
-];
+/* Werkzeugkisten (aus dem Geräteschuppen) */
 const WERK=[
  {n:1,img:"img/box1.jpg",t:[["Bügelsäge","bow saw","Handsäge mit Bügel; schnelles Sägen von Ästen"],["Schaufel (Spitz)","pointed shovel","Graben, festen Boden lösen"],["Schaufel (Flach)","flat shovel","Loses Material aufnehmen"],["Schaufel (Rund)","round shovel","Universell schaufeln"],["Teleskopsäge","pole saw","Hohe Äste vom Boden schneiden"],["Fuchsschwanz","handsaw","Holz und dicke Äste"],["Besen","broom","Kehren"]]},
  {n:2,img:"img/box2.jpg",t:[["Bauspaten","digging spade","Ausheben in festem Boden"],["Rodespaten","grubbing spade","Wurzeln roden, schmale Gräben"],["Unkrauthacke","weeding hoe","Unkraut hacken, Boden lockern"],["Plastikfederbesen","fan rake","Laub & Schnittgut zusammenrechen"],["Grubber","cultivator","Beet-Erde lockern"],["Astsäge","pruning saw","Dicke Äste"],["Astschere","loppers","Dickere Äste mit Hebel"],["Handheckenschere","hedge shears","Formschnitt kleiner Hecken"],["Axt","axe","Holz spalten"],["Handgruber","hand cultivator","Beete lockern, Unkraut auskratzen"],["Unkrautstecher","weed puller","Pfahlwurzeln ausstechen"],["Eimer","bucket","Tragen"]]},
@@ -159,26 +171,35 @@ const WERK=[
 
 /* hub tiles */
 const HUB=[
- {emo:"🌿",title:"Pflanzen",sub:"293 Arten – Namen, Blatt, Farben",route:"#/pflanzen",c:"#3f6f3a",badge:PLANTS.length},
- {emo:"🌳",title:"Wildhecke",sub:"17 heimische Heckensträucher",route:"#/wildhecke",c:"#5a7d2a",badge:WILD.length},
- {emo:"🧰",title:"Werkzeugkisten",sub:"Werkzeuge DE/EN + Verwendung",route:"#/werkzeuge",c:"#7a5c33",badge:WERK.reduce((a,b)=>a+b.t.length,0)},
- {emo:"🧱",title:"Wegebau",sub:"Schichtenaufbau & Pflaster",route:"#/t/wegebau",c:"#8a6d3b",badge:examCount("wegebau")},
- {emo:"🌱",title:"Rasen",sub:"Anlage & Pflege",route:"#/t/rasen",c:"#4c8b3a",badge:examCount("rasen")},
- {emo:"📋",title:"Pflanzenkenntnisse",sub:"Prüfungswissen Pflanzen",route:"#/t/pflanzenkenntnisse",c:"#3f6f5a",badge:examCount("pflanzenkenntnisse")},
- {emo:"💶",title:"Sozialversicherung",sub:"Die 5 Prinzipien",route:"#/t/sozialversicherung",c:"#b5651d",badge:examCount("sozialversicherung")}
+ {emo:"🌳",title:"Pflanzen",sub:"Namen aus Schule & Treptower Park",route:"#/pflanzen",c:"#3f6f3a",badge:PLANTS.length},
+ {emo:"✍️",title:"Namen-Test",sub:"Botanische Namen tippen & prüfen",route:"#/test",c:"#7a5c33",badge:TESTPOOL.length},
+ {emo:"📚",title:"Themen",sub:"Wegebau · Rasen · Prüfung · Werkzeug",route:"#/themen",c:"#4c8b3a",badge:TOPICS.length+1}
 ];
-function examCount(id){const t=TById[id];return t?t.exam.length+" Fragen":"";}
 
 /* ============ helpers ============ */
 const app=document.getElementById("app"), backBtn=document.getElementById("backBtn");
+backBtn.onclick=()=>{ if(history.length>1) history.back(); else location.hash="#/"; };
 const esc=s=>(""+(s==null?"":s)).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const escA=s=>esc(s).replace(/"/g,"&quot;");
 function hl(s,t){s=""+(s||"");if(!t)return esc(s);const i=s.toLowerCase().indexOf(t);if(i<0)return esc(s);
  return esc(s.slice(0,i))+"<mark>"+esc(s.slice(i,i+t.length))+"</mark>"+esc(s.slice(i+t.length));}
-function swatches(txt){const t=(txt||"").toLowerCase(),seen=[];for(const[w,h]of COLW){if(t.includes(w)&&!seen.includes(h))seen.push(h);}
- return seen.slice(0,3).map(h=>`<span class="sw" style="background:${h}"></span>`).join("")+esc(txt||"—");}
 function bindTips(){document.querySelectorAll(".t").forEach(el=>{if(el._b)return;el._b=1;
  el.addEventListener("click",e=>{document.querySelectorAll(".t.show").forEach(o=>{if(o!==el)o.classList.remove("show");});el.classList.toggle("show");});});}
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+/* wrap key German terms with English hover tooltips */
+function applyTerms(text,terms){let out=esc(text||"");(terms||[]).forEach(tm=>{if(!tm||!tm.de)return;
+  const e=esc(tm.de),i=out.indexOf(e);if(i<0)return;
+  out=out.slice(0,i)+`<span class="t" data-en="${escA(tm.en)}">${e}</span>`+out.slice(i+e.length);});return out;}
+/* Levenshtein distance + normalized similarity for the name test */
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;
+  let prev=Array.from({length:n+1},(_,i)=>i),cur=new Array(n+1);
+  for(let i=1;i<=m;i++){cur[0]=i;for(let j=1;j<=n;j++){
+    const c=a[i-1]===b[j-1]?0:1;cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+c);}
+    [prev,cur]=[cur,prev];}return prev[n];}
+function normBot(s){return (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")
+  .replace(/\s[×x]\s/g," ").replace(/×/g," ").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim();}
+function similarity(a,b){a=normBot(a);b=normBot(b);if(!a&&!b)return 1;const L=Math.max(a.length,b.length)||1;
+  return Math.max(0,1-lev(a,b)/L);}
 
 /* ============ router ============ */
 function render(){
@@ -187,7 +208,9 @@ function render(){
   window.scrollTo(0,0);
   if(h==="#/"||h==="") return renderHub();
   if(h==="#/pflanzen") return renderPflanzen();
-  if(h==="#/wildhecke") return renderWild();
+  if(h.startsWith("#/p/")) return renderPlant(+h.slice(4));
+  if(h==="#/test") return renderTest();
+  if(h==="#/themen") return renderThemen();
   if(h==="#/werkzeuge") return renderWerk();
   if(h.startsWith("#/t/")) return renderTopic(h.slice(4));
   renderHub();
@@ -197,17 +220,137 @@ window.addEventListener("hashchange",render);
 /* ============ hub ============ */
 function renderHub(){
   app.innerHTML=`<div class="hero"><h1>GaLaBau Lernwelt 🌿</h1>
-    <p>Interaktives Lernmaterial aus dem Unterricht – Spickzettel, Prüfungsfragen mit Hinweisen und Pflanzenwissen.
-    Tippe/klicke auf ein Thema.</p></div>
+    <p>Was ich in der Umschulung gelernt habe – Pflanzennamen aus Schule und Treptower Park,
+    ein Namen-Test und die Unterrichts-Themen. Tippe auf eine Kachel.</p></div>
     <div class="grid">${HUB.map(t=>`<a class="tile" href="${t.route}" style="--tc:${t.c}">
       <span class="bar"></span>${t.badge?`<span class="badge">${t.badge}</span>`:""}
       <span class="emo">${t.emo}</span><h3>${t.title}</h3><p>${t.sub}</p></a>`).join("")}</div>`;
   bindTips();
 }
 
+/* ============ Pflanzen: Liste -> Detail ============ */
+const FILTERS=[["alle","Alle"],["trep","🌳 Park"],["hecke","🌿 Hecke"]];
+function confFlag(p){
+  if(p.cats.includes("trep")){
+    if(p.conf==="high")return `<span class="flag g">🌳 Park</span>`;
+    if(p.conf==="medium")return `<span class="flag warn">⚠ prüfen</span>`;
+    return `<span class="flag warn">⚠ unsicher</span>`;
+  }
+  return `<span class="flag g">🌿 Hecke</span>`;
+}
+function renderPflanzen(){
+  app.innerHTML=`<div class="hero"><h1>🌳 Pflanzen</h1>
+    <p class="lead">${PLANTS.length} Arten – im Unterricht und im Treptower Park gelernt. Tippe eine Pflanze für Details, Merkmal und Karte.</p></div>
+    <div class="note">🔎 Die Park-Pflanzen sind per Foto bestimmt (KI). „⚠ prüfen/unsicher" heißt: im Unterricht gegenchecken.</div>
+    <div class="controls"><input id="q" type="search" placeholder="🔎 suchen (Deutsch, Botanisch) …" autocomplete="off">
+      <div class="chips" id="chips">${FILTERS.map((f,i)=>`<button class="chip${i===0?" on":""}" data-c="${f[0]}">${f[1]}</button>`).join("")}</div>
+      <div class="count" id="cnt"></div></div>
+    <div class="pgrid" id="pg"></div>`;
+  let active="alle";
+  const q=document.getElementById("q"),pg=document.getElementById("pg"),cnt=document.getElementById("cnt");
+  document.getElementById("chips").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;
+    active=b.dataset.c;[...e.currentTarget.children].forEach(x=>x.classList.toggle("on",x===b));draw();});
+  q.addEventListener("input",draw);
+  function draw(){const t=q.value.trim().toLowerCase();pg.innerHTML="";let n=0;
+    PLANTS.forEach((p,idx)=>{
+      if(active!=="alle"&&!p.cats.includes(active))return;
+      if(t&&!((p.de+" "+p.bot+" "+p.fam).toLowerCase().includes(t)))return;n++;
+      const a=document.createElement("a");a.className="pc";a.href="#/p/"+idx;
+      a.innerHTML=(p.img?`<img loading="lazy" src="${p.img}" alt="">`:`<div class="ph">🌿</div>`)+
+        `<div class="de">${hl(p.de,t)}</div><div class="bot">${hl(p.bot,t)}</div>${confFlag(p)}`;
+      pg.appendChild(a);});
+    cnt.textContent=`${n} von ${PLANTS.length} Pflanzen`;}
+  draw();
+}
+function renderPlant(idx){
+  const p=PLANTS[idx];if(!p){location.hash="#/pflanzen";return;}
+  const c=CARDS[p.bot]||{};
+  const cats=p.cats.map(x=>x==="trep"?"Treptower Park":"Wildhecke");
+  let badge="";
+  if(p.cats.includes("trep")){
+    badge = p.conf==="high" ? `<span class="flag g">Foto-Bestimmung: sicher</span>`
+          : p.conf==="medium" ? `<span class="flag warn">⚠ Bestimmung zu prüfen</span>`
+          : `<span class="flag warn">⚠ Bestimmung unsicher</span>`;
+  }
+  const natTxt={"✅":"heimisch ✅","⚠️":"nur bedingt heimisch ⚠️","❌":"nicht heimisch ❌"}[p.nat];
+  app.innerHTML=`
+    ${p.img?`<img class="dhero" src="${p.img}" alt="${escA(p.de)}">`:`<div class="dph">🌿</div>`}
+    <h1 class="dname">${esc(p.de)}</h1>
+    <div class="dbot">${esc(p.bot)}</div>
+    <div class="dmeta">Familie: ${esc(p.fam||"—")} · ${cats.map(x=>`<span>${esc(x)}</span>`).join(" · ")}${natTxt?" · "+natTxt:""}</div>
+    <div>${badge}</div>
+    ${c.merkmal?`<div class="card"><h3>🔍 Merkmal – so erkennt man sie</h3><p>${applyTerms(c.merkmal,c.terms)}</p></div>`:""}
+    ${c.tipp?`<div class="card"><h3>💡 Tipp</h3><p>${applyTerms(c.tipp,c.terms)}</p></div>`:""}
+    ${p.lat!=null?`<a class="maplink" target="_blank" rel="noopener"
+       href="https://www.google.com/maps?q=${p.lat},${p.lon}">📍 Standort im Treptower Park öffnen</a>`:""}
+  `;
+  bindTips();
+}
+
+/* ============ Namen-Test (Levenshtein) ============ */
+function renderTest(){
+  app.innerHTML=`<div class="hero"><h1>✍️ Namen-Test</h1>
+    <p class="lead">Wie heißt die Pflanze botanisch? Tippe den Namen – der Balken zeigt live, wie nah du bist.</p></div>
+    <div class="note">Getestet werden ${TESTPOOL.length} gesicherte Namen (Wildhecke + sichere Park-Pflanzen). Unsichere Park-Bestimmungen sind ausgenommen.</div>
+    <div class="test" id="test"></div>`;
+  let deck=shuffle(TESTPOOL),i=0,right=0,done=0,revealed=false;
+  const box=document.getElementById("test");
+  function show(){
+    const p=deck[i];revealed=false;
+    box.innerHTML=`<div class="testcard">
+      ${p.img?`<img src="${p.img}" alt="">`:`<div style="font-size:2.4rem;margin:6px">🌿</div>`}
+      <div class="qde">${esc(p.de)}</div>
+      <div class="qfam">Familie: ${esc(p.fam||"—")}</div>
+      <input id="ans" type="text" placeholder="Gattung Art …" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <div class="simwrap"><div class="simtrack"><div class="simfill" id="fill"></div></div>
+        <div class="simtxt" id="simtxt">Tippe den botanischen Namen …</div></div>
+      <div id="vbox"></div>
+      <div class="qbtns" style="justify-content:center">
+        <button class="btn p" id="check">Prüfen</button>
+        <button class="btn" id="skip">Überspringen</button>
+        <button class="btn" id="next" hidden>Nächste →</button>
+      </div>
+    </div>
+    <div class="score" id="score"></div>`;
+    const ans=document.getElementById("ans"),fill=document.getElementById("fill"),
+      simtxt=document.getElementById("simtxt"),vbox=document.getElementById("vbox"),
+      check=document.getElementById("check"),next=document.getElementById("next"),skip=document.getElementById("skip");
+    updScore();ans.focus();
+    ans.addEventListener("input",()=>{ if(revealed) return;
+      const s=similarity(ans.value,p.bot),pct=Math.round(s*100);
+      fill.style.width=pct+"%";
+      fill.style.background=s>=.9?"var(--ok)":s>=.6?"var(--warn)":"var(--bad)";
+      simtxt.textContent=ans.value.trim()?`Übereinstimmung: ${pct}%`:"Tippe den botanischen Namen …";
+    });
+    ans.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();revealed?next.click():doCheck();}});
+    check.onclick=doCheck; skip.onclick=()=>{reveal(false,true);}; next.onclick=()=>{i=(i+1)%deck.length;if(i===0)deck=shuffle(deck);show();};
+    function doCheck(){const s=similarity(ans.value,p.bot);reveal(s>=0.9,false,s);}
+    function reveal(ok,skipped,s){
+      revealed=true;done++;if(ok)right++;
+      check.hidden=true;skip.hidden=true;next.hidden=false;ans.disabled=true;next.focus();
+      if(!skipped){fill.style.width=Math.round((s||0)*100)+"%";fill.style.background=ok?"var(--ok)":"var(--bad)";}
+      vbox.innerHTML=`<div class="verdict ${ok?"ok":"no"}">
+        ${skipped?"⏭️ Übersprungen.":ok?"✅ Richtig!":"❌ Noch nicht ganz."}
+        <div class="cor">${esc(p.bot)}</div></div>`;
+      updScore();
+    }
+    function updScore(){document.getElementById("score").textContent=`Richtig: ${right} / ${done}  ·  Pflanze ${((i)%deck.length)+1} von ${deck.length}`;}
+  }
+  show();
+}
+
+/* ============ Themen (Liste) ============ */
+function renderThemen(){
+  const items=TOPICS.map(t=>({emo:TICON[t.id]||"📋",title:t.title,sub:(t.exam?t.exam.length+" Fragen":"")+(t.tutorial?` · ${t.tutorial.length} Spickzettel`:""),route:"#/t/"+t.id}));
+  items.push({emo:"🧰",title:"Werkzeugkisten",sub:WERK.reduce((a,b)=>a+b.t.length,0)+" Werkzeuge · 4 Kisten",route:"#/werkzeuge"});
+  app.innerHTML=`<div class="hero"><h1>📚 Themen</h1><p class="lead">Unterrichtsstoff mit Spickzettel und interaktiven Prüfungsfragen.</p></div>
+    <div class="nav">${items.map(it=>`<a href="${it.route}"><span class="em">${it.emo}</span>
+      <span class="tx"><b>${esc(it.title)}</b><span>${esc(it.sub)}</span></span><span class="ar">→</span></a>`).join("")}</div>`;
+}
+
 /* ============ class topic: tutorial + interactive exam ============ */
 function renderTopic(id){
-  const t=TById[id]; if(!t){renderHub();return;}
+  const t=TById[id]; if(!t){location.hash="#/themen";return;}
   app.innerHTML=`<div class="hero"><h1>${esc(t.title)}</h1><p class="lead">${esc(t.intro)}</p></div>
     <h2 class="sec">📖 Spickzettel</h2>
     ${t.tutorial.map(s=>`<div class="card"><h3>${esc(s.heading)}</h3>${s.html}</div>`).join("")}
@@ -240,77 +383,6 @@ function examCard(e,num){
   ab.onclick=()=>{shown=!shown;ansBox.hidden=!shown;ab.textContent=shown?"Antwort verbergen":"Antwort zeigen";
     if(shown&&!ansBox.innerHTML){ansBox.innerHTML="<b>Antwort:</b> "+e.answer;bindTips();}};
   return d;
-}
-
-/* ============ Pflanzen (browse + flashcards) ============ */
-function renderPflanzen(){
-  app.innerHTML=`<div class="hero"><h1>🌿 Pflanzen</h1><p class="lead">${PLANTS.length} Arten mit Blattstellung, Belaubung und Frucht-/Blütenfarbe.</p></div>
-    <div class="seg"><button id="mBrowse" class="on">Stöbern</button><button id="mCards">Karteikarten</button></div>
-    <div id="pbody"></div>`;
-  document.getElementById("mBrowse").onclick=()=>{setSeg(0);plantBrowse();};
-  document.getElementById("mCards").onclick=()=>{setSeg(1);plantCards();};
-  plantBrowse();
-}
-function setSeg(i){document.getElementById("mBrowse").classList.toggle("on",i===0);document.getElementById("mCards").classList.toggle("on",i===1);}
-function plantBrowse(){
-  const cats=Object.keys(CATS);
-  document.getElementById("pbody").innerHTML=`
-    <div class="controls"><input id="q" type="search" placeholder="🔎 suchen (Deutsch, Botanisch) …" autocomplete="off">
-    <div class="chips" id="chips"><button class="chip on" data-c="alle">Alle</button>
-    ${cats.map(c=>`<button class="chip" data-c="${c}">${CATS[c][0]}</button>`).join("")}</div>
-    <div class="count" id="cnt"></div></div><div class="pgrid" id="pg"></div>`;
-  let active="alle";
-  const q=document.getElementById("q"),pg=document.getElementById("pg"),cnt=document.getElementById("cnt");
-  document.getElementById("chips").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;
-    active=b.dataset.c;[...e.currentTarget.children].forEach(x=>x.classList.toggle("on",x===b));draw();});
-  q.addEventListener("input",draw);
-  function draw(){const t=q.value.trim().toLowerCase();pg.innerHTML="";let n=0;
-    for(const p of PLANTS){if(active!=="alle"&&p.category!==active)continue;
-      if(t&&!((p.de+" "+p.botanical+" "+(p.use||"")).toLowerCase().includes(t)))continue;n++;
-      const col=(CATS[p.category]||["",""])[1];const d=document.createElement("div");d.className="pc";d.style.setProperty("--pc",col);
-      d.innerHTML=(p.image?`<img loading="lazy" src="${p.image}" alt="">`:"")+
-        `<div class="de">${hl(p.de,t)}${p.foliage?`<span class="bel" style="background:${BELCOL[(p.foliage||'').split(' ')[0]]||'#777'}">${esc(p.foliage)}</span>`:""}</div>
-        <div class="bot">${hl(p.botanical,t)}</div>
-        ${p.leaf_arrangement?`<div class="ln"><b>Blatt:</b> ${esc(p.leaf_arrangement)}${p.leaf_shape?", "+esc(p.leaf_shape):""}</div>`:""}
-        ${p.flower_color?`<div class="ln"><b>Blüte:</b> ${swatches(p.flower_color)}</div>`:""}
-        ${p.fruit_color?`<div class="ln"><b>Frucht:</b> ${swatches(p.fruit_color)}</div>`:""}
-        <div class="use">${hl(p.use||"",t)}</div>`;
-      pg.appendChild(d);}
-    cnt.textContent=`${n} von ${PLANTS.length} Pflanzen`;}
-  draw();
-}
-function plantCards(){
-  const body=document.getElementById("pbody");
-  let deck=shuffle(PLANTS),i=0,flip=false;
-  function show(){const p=deck[i];flip=false;
-    body.innerHTML=`<div class="fcard" id="fc">
-      ${p.image?`<img src="${p.image}" alt="">`:""}
-      <div class="big">${esc(p.de)}</div>
-      <div id="fb" style="color:var(--muted)">Wie heißt sie botanisch?</div>
-      </div>
-      <div style="text-align:center;margin-top:12px">
-        <button class="btn p" id="flip">Antwort</button>
-        <button class="btn" id="next">Nächste →</button>
-        <div class="count" style="margin-top:8px">Karte ${i+1} / ${deck.length}</div>
-      </div>`;
-    document.getElementById("flip").onclick=()=>{flip=!flip;const fb=document.getElementById("fb");
-      if(flip){fb.innerHTML=`<div style="font-style:italic;font-size:1.15rem;color:var(--ink)">${esc(p.botanical)}</div>
-        ${p.foliage?`<span class="bel" style="background:${BELCOL[(p.foliage||'').split(' ')[0]]||'#777'}">${esc(p.foliage)}</span> `:""}
-        <div style="font-size:.9rem;margin-top:6px">${esc(p.use||"")}</div>`;}
-      else fb.innerHTML="Wie heißt sie botanisch?";};
-    document.getElementById("next").onclick=()=>{i=(i+1)%deck.length;show();};}
-  show();
-}
-
-/* ============ Wildhecke ============ */
-function renderWild(){
-  app.innerHTML=`<div class="hero"><h1>🌳 Wildhecke</h1>
-    <p class="lead">Deine 17 heimischen Heckensträucher (im Unterricht gelernt). ✅ heimisch · ❌ nicht heimisch · ⚠️ nur lokal.</p></div>
-    <div class="pgrid">${WILD.map(w=>`<div class="pc" style="--pc:#5a7d2a">
-      ${w.img?`<img loading="lazy" src="${w.img}" alt="">`:""}
-      <div class="de">${esc(w.de)} <span class="tag">${w.nat}</span></div>
-      <div class="bot">${esc(w.bot)}</div>
-      <div class="use">${esc(w.tr)}</div></div>`).join("")}</div>`;
 }
 
 /* ============ Werkzeugkisten ============ */
