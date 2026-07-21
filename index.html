@@ -100,6 +100,12 @@
   .flag.warn{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
   .flag.g{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
   .tag{display:inline-block;font-size:.72rem;background:var(--bg2);border:1px solid var(--line);border-radius:99px;padding:2px 10px;margin:0 5px 5px 0}
+  /* tool thumbnails + credits */
+  .tdimg{width:66px;padding:5px 6px}
+  .tdimg img{width:56px;height:56px;object-fit:contain;background:#fff;border-radius:8px;border:1px solid var(--line);display:block}
+  .credits{font-size:.78rem;color:var(--muted)}
+  .credits li{margin:2px 0}
+  .credits a{color:var(--muted)}
   /* plant detail */
   .dhero{width:100%;max-height:340px;object-fit:cover;border-radius:16px;background:var(--bg2);box-shadow:var(--shadow)}
   .dph{width:100%;height:200px;border-radius:16px;background:linear-gradient(135deg,var(--bg2),var(--line));
@@ -150,11 +156,13 @@
 
 <script src="assets/plants.js"></script>
 <script src="assets/cards.js"></script>
+<script src="assets/tools.js"></script>
 <script src="assets/topics.js"></script>
 <script>
 /* ============ data ============ */
 const PLANTS=window.PLANTS||[];
 const CARDS=window.CARDS||{};
+const TOOLIMG=window.TOOLIMG||{};
 const TOPICS=window.TOPICS||[];
 const TById=Object.fromEntries(TOPICS.map(t=>[t.id,t]));
 /* test pool: high-confidence Park plants + all Wildhecke (curated class list) */
@@ -393,16 +401,26 @@ function renderWerk(){
     <div id="wb"></div>`;
   const q=document.getElementById("q"),wb=document.getElementById("wb"),cnt=document.getElementById("cnt");
   const total=WERK.reduce((a,b)=>a+b.t.length,0);
-  function draw(){const t=q.value.trim().toLowerCase();wb.innerHTML="";let n=0;
+  function draw(){const t=q.value.trim().toLowerCase();wb.innerHTML="";let n=0;const used={};
     for(const b of WERK){const rows=b.t.filter(r=>!t||(r[0]+" "+r[1]+" "+r[2]).toLowerCase().includes(t));if(!rows.length)continue;n+=rows.length;
       const c=document.createElement("div");c.className="card";
       c.innerHTML=`<div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">
         <img loading="lazy" src="${b.img}" alt="BOX ${b.n}" style="width:56px;height:56px;object-fit:cover;border-radius:9px;border:1px solid var(--line)">
         <h3 style="margin:0">BOX ${b.n} <span class="tag">${rows.length}</span></h3></div>
-        <table><thead><tr><th>Deutsch</th><th>English</th><th>Verwendung</th></tr></thead><tbody>
-        ${rows.map(r=>`<tr><td><b>${hl(r[0],t)}</b></td><td style="color:var(--muted);font-style:italic">${hl(r[1],t)}</td><td>${hl(r[2],t)}</td></tr>`).join("")}
+        <table><thead><tr><th></th><th>Deutsch</th><th>English</th><th>Verwendung</th></tr></thead><tbody>
+        ${rows.map(r=>{const ti=TOOLIMG[r[0]];if(ti)used[r[0]]=ti;
+          return `<tr><td class="tdimg">${ti?`<a href="${ti.page}" target="_blank" rel="noopener" title="${escA(ti.artist+" · "+ti.lic+" (Wikimedia Commons)")}"><img loading="lazy" src="${ti.img}" alt="${escA(r[0])}"></a>`:""}</td>
+          <td><b>${hl(r[0],t)}</b></td><td style="color:var(--muted);font-style:italic">${hl(r[1],t)}</td><td>${hl(r[2],t)}</td></tr>`;}).join("")}
         </tbody></table>`;
       wb.appendChild(c);}
+    const names=Object.keys(used);
+    if(names.length){const cr=document.createElement("div");cr.className="card";
+      cr.innerHTML=`<h3>📷 Bildnachweise</h3>
+        <p class="credits">Die Werkzeugfotos stammen von <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>
+        und stehen unter freien Lizenzen. Die Kisten-Fotos oben sind eigene Aufnahmen.</p>
+        <ul class="credits">${names.map(k=>{const i=used[k];
+          return `<li><b>${esc(k)}</b> – ${esc(i.artist||"unbekannt")}, <a href="${i.page}" target="_blank" rel="noopener">${esc(i.lic)}</a></li>`;}).join("")}</ul>`;
+      wb.appendChild(cr);}
     cnt.textContent=`${n} von ${total} Werkzeugen · 4 Kisten`;}
   q.addEventListener("input",draw);draw();
 }
