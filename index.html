@@ -3,173 +3,204 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Lernmaterial aus der GaLaBau-Umschulung: Pflanzennamen aus Schule und Treptower Park, Namen-Test, Unterrichtsthemen und Werkzeugkunde.">
 <title>GaLaBau Lernwelt</title>
 <style>
-  :root{
-    --bg:#f6f7f3; --bg2:#eef1ea; --card:#ffffff; --ink:#1a1d18; --muted:#697065; --line:#e4e6de;
-    --accent:#3f6f3a; --accent2:#5a7d2a; --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(30,40,20,.05);
-    --ok:#2f7d4f; --bad:#c0392b; --warn:#b5651d;
-  }
-  @media (prefers-color-scheme:dark){:root{
-    --bg:#12140e; --bg2:#181b12; --card:#1c1f17; --ink:#e9ebe3; --muted:#9aa08f; --line:#2a2e22;
-    --accent:#8fc07f; --accent2:#a7c96a; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
-    --ok:#8fc07f; --bad:#e57373; --warn:#d9a441;}}
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
-  a{color:inherit}
-  .top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
-    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .top .in{max-width:820px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
-  .brand{font-weight:700;letter-spacing:-.01em;font-size:1.05rem;display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none}
-  .brand .dot{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:inline-block}
-  .back{margin-left:auto;font-size:.85rem;color:var(--muted);text-decoration:none;border:1px solid var(--line);
-    background:var(--card);padding:6px 12px;border-radius:99px;cursor:pointer;font-family:inherit}
-  .back:hover{border-color:var(--accent);color:var(--ink)}
-  main{max-width:820px;margin:0 auto;padding:22px 18px 80px}
-  .hero h1{font-size:1.7rem;margin:.2em 0 .1em;letter-spacing:-.02em}
-  .hero p{color:var(--muted);margin:.2em 0 1.4em}
-  /* hub grid */
-  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
-  .tile{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:16px;
-    padding:20px;box-shadow:var(--shadow);transition:transform .15s ease,border-color .15s ease;position:relative;overflow:hidden}
-  .tile:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--tc,var(--accent)) 55%,var(--line))}
-  .tile .emo{font-size:2rem;display:block;margin-bottom:10px}
-  .tile h3{margin:0 0 3px;font-size:1.16rem;letter-spacing:-.01em}
-  .tile p{margin:0;color:var(--muted);font-size:.88rem}
-  .tile .badge{position:absolute;top:16px;right:16px;font-size:.72rem;color:var(--tc,var(--accent));
-    background:color-mix(in srgb,var(--tc,var(--accent)) 12%,transparent);padding:2px 9px;border-radius:99px;font-weight:600}
-  .tile .bar{position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--tc,var(--accent))}
-  /* section headings */
-  h2.sec{font-size:1.15rem;margin:1.8em 0 .6em;display:flex;align-items:center;gap:8px}
-  .lead{color:var(--muted);margin:.1em 0 1.2em;font-size:1.02rem}
-  .note{font-size:.82rem;color:var(--muted);background:color-mix(in srgb,var(--warn) 9%,transparent);
-    border-left:3px solid var(--warn);border-radius:8px;padding:8px 12px;margin:0 0 14px}
-  /* content cards */
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:var(--shadow)}
-  .card h3{margin:.1em 0 .5em;font-size:1.05rem}
-  .card p{margin:.4em 0}
-  .card ul{margin:.4em 0;padding-left:22px}.card li{margin:3px 0}
-  .card table{width:100%;border-collapse:collapse;font-size:.92rem;margin:.5em 0;display:block;overflow-x:auto}
-  .card th,.card td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
-  .card th{color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
-  /* hover term */
-  .t{border-bottom:1px dotted var(--accent);cursor:help;position:relative}
-  .t:hover::after,.t.show::after{content:attr(data-en);position:absolute;left:0;bottom:135%;white-space:nowrap;
-    background:#222;color:#fff;padding:4px 9px;border-radius:7px;font-size:.78rem;z-index:40;box-shadow:0 3px 10px rgba(0,0,0,.4)}
-  .t:hover::before,.t.show::before{content:"";position:absolute;left:12px;bottom:125%;border:5px solid transparent;border-top-color:#222;z-index:40}
-  /* exam */
-  .qa{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 17px;margin:12px 0;box-shadow:var(--shadow)}
-  .qa .qtext{font-weight:600;margin-bottom:10px}
-  .qa .qtext b{color:var(--accent)}
-  textarea.mine{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);
-    padding:9px 11px;font:inherit;font-size:.92rem;resize:vertical;min-height:44px}
-  .qbtns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-  .btn{border:1px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:99px;padding:8px 14px;
-    font-size:.85rem;cursor:pointer;font-weight:500;font-family:inherit}
-  .btn:hover{border-color:var(--accent)}
-  .btn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .btn:disabled{opacity:.5;cursor:default}
-  .hints{margin-top:10px;display:flex;flex-direction:column;gap:6px}
-  .hint{background:color-mix(in srgb,var(--warn) 12%,transparent);border-left:3px solid var(--warn);
-    border-radius:8px;padding:7px 11px;font-size:.9rem;animation:fade .25s ease}
-  .answer{margin-top:10px;background:color-mix(in srgb,var(--ok) 10%,transparent);border-left:3px solid var(--ok);
-    border-radius:8px;padding:10px 13px;font-size:.95rem}
-  @keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1}}
-  /* controls */
-  .controls{position:sticky;top:52px;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);
-    backdrop-filter:blur(8px);padding:10px 0;margin-bottom:6px}
-  #q{width:100%;padding:11px 14px;font-size:1rem;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
-  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
-  .chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 13px;border-radius:99px;
-    font-size:.85rem;cursor:pointer;white-space:nowrap}
-  .chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .count{color:var(--muted);font-size:.82rem;margin:6px 0 0}
-  /* plant grid + card */
-  .pgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(158px,1fr))}
-  .pc{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:14px;
-    padding:10px;box-shadow:var(--shadow);transition:transform .12s ease,border-color .12s ease}
-  .pc:hover{transform:translateY(-2px);border-color:var(--accent)}
-  .pc img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;margin-bottom:8px;background:var(--bg2)}
-  .pc .ph{width:100%;aspect-ratio:4/3;border-radius:10px;margin-bottom:8px;background:linear-gradient(135deg,var(--bg2),var(--line));
-    display:flex;align-items:center;justify-content:center;font-size:1.7rem;opacity:.6}
-  .pc .de{font-weight:650;font-size:.98rem;line-height:1.2}
-  .pc .bot{font-style:italic;color:var(--muted);font-size:.82rem;margin-top:1px}
-  .flag{display:inline-block;font-size:.68rem;padding:1px 7px;border-radius:99px;margin-top:6px;font-weight:600}
-  .flag.warn{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
-  .flag.g{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
-  .tag{display:inline-block;font-size:.72rem;background:var(--bg2);border:1px solid var(--line);border-radius:99px;padding:2px 10px;margin:0 5px 5px 0}
-  /* tool thumbnails + credits */
-  .tdimg{width:66px;padding:5px 6px}
-  .tdimg img{width:56px;height:56px;object-fit:contain;background:#fff;border-radius:8px;border:1px solid var(--line);display:block}
-  .credits{font-size:.78rem;color:var(--muted)}
-  .credits li{margin:2px 0}
-  .credits a{color:var(--muted)}
-  /* plant detail */
-  .dhero{width:100%;max-height:340px;object-fit:cover;border-radius:16px;background:var(--bg2);box-shadow:var(--shadow)}
-  .dph{width:100%;height:200px;border-radius:16px;background:linear-gradient(135deg,var(--bg2),var(--line));
-    display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:.5}
-  .dname{font-size:1.7rem;margin:.5em 0 .05em;letter-spacing:-.02em}
-  .dbot{font-style:italic;color:var(--muted);font-size:1.1rem;margin:0 0 .3em}
-  .dmeta{margin:.4em 0 1em;font-size:.9rem;color:var(--muted)}
-  .maplink{display:inline-flex;align-items:center;gap:6px;text-decoration:none;background:var(--accent);color:#fff;
-    border-radius:99px;padding:9px 16px;font-size:.9rem;font-weight:600;margin-top:6px}
-  /* navlist (themen) */
-  .nav{display:flex;flex-direction:column;gap:10px}
-  .nav a{display:flex;align-items:center;gap:14px;text-decoration:none;background:var(--card);border:1px solid var(--line);
-    border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);transition:border-color .12s ease,transform .12s ease}
-  .nav a:hover{border-color:var(--accent);transform:translateX(2px)}
-  .nav .em{font-size:1.7rem}
-  .nav .tx b{font-size:1.08rem;letter-spacing:-.01em}
-  .nav .tx span{display:block;color:var(--muted);font-size:.85rem}
-  .nav .ar{margin-left:auto;color:var(--muted)}
-  /* Namen-Test */
-  .test{max-width:520px;margin:0 auto}
-  .testcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow);text-align:center}
-  .testcard img{max-width:100%;max-height:230px;object-fit:contain;border-radius:12px;margin:0 auto 8px}
-  .testcard .qde{font-size:1.5rem;font-weight:700;margin:6px 0 2px}
-  .testcard .qfam{color:var(--muted);font-size:.86rem;margin-bottom:12px}
-  #ans{width:100%;padding:12px 14px;font-size:1.1rem;border:2px solid var(--line);border-radius:12px;
-    background:var(--bg);color:var(--ink);text-align:center;font-style:italic;font-family:inherit}
-  #ans:focus{outline:none;border-color:var(--accent)}
-  .simwrap{margin:12px 0 4px}
-  .simtrack{height:12px;border-radius:99px;background:var(--bg2);overflow:hidden}
-  .simfill{height:100%;width:0;border-radius:99px;transition:width .12s ease,background .12s ease}
-  .simtxt{font-size:.82rem;color:var(--muted);margin-top:5px;min-height:1.2em}
-  .verdict{margin-top:12px;border-radius:12px;padding:12px;font-size:1rem;animation:fade .2s ease}
-  .verdict.ok{background:color-mix(in srgb,var(--ok) 13%,transparent);border:1px solid var(--ok)}
-  .verdict.no{background:color-mix(in srgb,var(--bad) 11%,transparent);border:1px solid var(--bad)}
-  .verdict .cor{font-style:italic;font-size:1.15rem;font-weight:600}
-  .score{text-align:center;color:var(--muted);font-size:.86rem;margin-top:14px}
-  mark{background:#ffe08a;color:#000;border-radius:3px;padding:0 2px}
-  footer{max-width:820px;margin:0 auto;padding:0 18px 50px;color:var(--muted);font-size:.82rem;text-align:center}
+:root{
+  color-scheme: light dark;
+  --bg:#E4E6DF; --surface:#F4F5F0; --ink:#17211B; --muted:#5B655E; --line:#C9CFC4;
+  --enamel:#1E3A2F; --on-enamel:#EFF2EA; --signal:#C4551A; --ok:#356F47; --bad:#A53526;
+  --tick:rgba(23,33,27,.42); --tick2:rgba(23,33,27,.65);
+  --radius:4px;
+  --display:"Arial Narrow","Helvetica Neue",Arial,system-ui,sans-serif;
+  --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#121815; --surface:#1B231E; --ink:#E9EDE6; --muted:#96A099; --line:#2B352E;
+  --enamel:#24382E; --on-enamel:#EFF2EA; --signal:#F2762F; --ok:#77BE8C; --bad:#E07A6C;
+  --tick:rgba(233,237,230,.34); --tick2:rgba(233,237,230,.6);
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--body);-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;overflow-wrap:break-word}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--signal);outline-offset:2px;border-radius:2px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+
+/* ---- type roles ---- */
+.eyebrow{font-family:var(--display);text-transform:uppercase;letter-spacing:.16em;font-size:.7rem;font-weight:700;color:var(--muted);margin:0 0 6px}
+.disp{font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-weight:700;font-stretch:condensed}
+.bot{font-family:var(--serif);font-style:italic}
+.mono{font-family:var(--mono)}
+
+/* ---- chrome ---- */
+.bar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:800px;margin:0 auto;padding:11px 18px;display:flex;align-items:center;gap:12px}
+.mark{display:flex;align-items:center;gap:9px;text-decoration:none;font-family:var(--display);text-transform:uppercase;letter-spacing:.08em;font-weight:700;font-size:.92rem}
+.mark .chip{width:19px;height:19px;border-radius:2px;background:var(--enamel);position:relative;flex:none}
+.mark .chip::after{content:"";position:absolute;inset:3px;border:1px solid rgba(239,242,234,.5);border-radius:1px}
+.back{margin-left:auto;font-family:var(--display);text-transform:uppercase;letter-spacing:.09em;font-size:.75rem;font-weight:700;
+  color:var(--muted);background:none;border:1px solid var(--line);border-radius:3px;padding:6px 11px;cursor:pointer}
+.back:hover{color:var(--ink);border-color:var(--ink)}
+main{max-width:800px;margin:0 auto;padding:24px 18px 90px}
+footer{max-width:800px;margin:0 auto;padding:0 18px 46px;color:var(--muted);font-size:.78rem}
+
+/* ---- enamel plate (the Pflanzenschild motif) ---- */
+.plate{background:var(--enamel);color:var(--on-enamel);border-radius:var(--radius);padding:20px 22px;position:relative}
+.plate::after{content:"";position:absolute;inset:5px;border:1px solid rgba(239,242,234,.22);border-radius:2px;pointer-events:none}
+.plate h1{font-family:var(--display);text-transform:uppercase;letter-spacing:.045em;font-weight:700;
+  font-size:clamp(1.75rem,6.4vw,2.7rem);line-height:1.02;margin:0}
+.plate .sub{font-family:var(--mono);font-size:.72rem;line-height:1.5;letter-spacing:.01em;opacity:.82;margin-top:10px}
+
+/* ---- horizon (ground line from the Schichtenaufbau) ---- */
+.horizon{border-top:2px solid var(--ink);position:relative;margin:26px 0 4px}
+.horizon::after{content:"";position:absolute;left:0;right:0;top:3px;border-top:1px solid var(--line)}
+
+/* ---- index board (home nav) ---- */
+.board{list-style:none;margin:22px 0 0;padding:0}
+.board li{border-bottom:1px solid var(--line)}
+.board a{display:grid;grid-template-columns:1fr auto;gap:3px 14px;padding:16px 3px;text-decoration:none;color:inherit;align-items:baseline}
+.board .n{grid-column:1;font-family:var(--display);text-transform:uppercase;letter-spacing:.05em;font-weight:700;font-size:1.16rem;line-height:1.15}
+.board .c{grid-column:2;grid-row:1;text-align:right;font-family:var(--mono);font-size:.78rem;color:var(--signal);white-space:nowrap}
+.board .d{grid-column:1/-1;color:var(--muted);font-size:.84rem;line-height:1.45}
+.board a:hover .n,.board a:focus-visible .n{color:var(--signal)}
+
+/* ---- section heads ---- */
+.sec{font-family:var(--display);text-transform:uppercase;letter-spacing:.1em;font-size:.95rem;font-weight:700;
+  margin:34px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.lead{color:var(--muted);margin:.35em 0 1.3em}
+.hint-note{font-size:.8rem;color:var(--muted);border-left:2px solid var(--signal);padding:7px 0 7px 11px;margin:0 0 18px}
+
+/* ---- cards / content ---- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin:12px 0}
+.card h3{font-family:var(--display);text-transform:uppercase;letter-spacing:.06em;font-size:.92rem;margin:0 0 .6em}
+.card p{margin:.45em 0}
+.card ul{margin:.45em 0;padding-left:20px}
+.card li{margin:3px 0}
+.card table{width:100%;border-collapse:collapse;font-size:.9rem;margin:.5em 0;display:block;overflow-x:auto}
+.card th,.card td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+.card th{font-family:var(--display);text-transform:uppercase;letter-spacing:.07em;font-size:.7rem;color:var(--muted);white-space:nowrap}
+
+/* ---- hover glossary ---- */
+.t{border-bottom:1px dotted var(--signal);cursor:help;position:relative}
+.t:hover::after,.t.show::after{content:attr(data-en);position:absolute;left:0;bottom:132%;white-space:nowrap;
+  background:var(--enamel);color:var(--on-enamel);padding:4px 9px;border-radius:3px;font-size:.76rem;font-family:var(--body);z-index:40}
+.t:hover::before,.t.show::before{content:"";position:absolute;left:11px;bottom:124%;border:5px solid transparent;border-top-color:var(--enamel);z-index:40}
+
+/* ---- controls ---- */
+.field{width:100%;padding:11px 13px;font:1rem var(--body);border:1px solid var(--line);border-radius:3px;background:var(--surface);color:var(--ink)}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin:11px 0 4px}
+.chip-btn{font-family:var(--display);text-transform:uppercase;letter-spacing:.07em;font-size:.75rem;font-weight:700;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 13px;border-radius:99px;cursor:pointer}
+.chip-btn.on{background:var(--enamel);color:var(--on-enamel);border-color:var(--enamel)}
+.count{font-family:var(--mono);font-size:.78rem;color:var(--muted);margin:9px 0 0}
+.btn{font-family:var(--display);text-transform:uppercase;letter-spacing:.08em;font-weight:700;font-size:.8rem;
+  padding:10px 16px;border-radius:3px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--signal);color:var(--signal)}
+.btn-solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn-solid:hover{background:var(--signal);border-color:var(--signal);color:#fff}
+.btn:disabled{opacity:.45;cursor:default}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+
+/* ---- plant grid: each plant is a park label ---- */
+.pgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));margin-top:16px}
+.pcard{display:block;text-decoration:none;color:inherit;border-radius:var(--radius);overflow:hidden;background:var(--enamel);
+  transition:transform .13s ease}
+.pcard:hover{transform:translateY(-2px)}
+.pcard .ph{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--line)}
+.pcard .noph{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:4/3;background:var(--line);color:var(--muted);font-size:1.5rem}
+.pcard .label{padding:10px 11px 11px;position:relative;color:var(--on-enamel)}
+.pcard .label::after{content:"";position:absolute;left:4px;right:4px;top:2px;bottom:4px;border:1px solid rgba(239,242,234,.18);border-radius:2px;pointer-events:none}
+.pcard .de{font-family:var(--display);text-transform:uppercase;letter-spacing:.035em;font-weight:700;font-size:.9rem;line-height:1.14}
+.pcard .bo{font-family:var(--serif);font-style:italic;font-size:.79rem;opacity:.86;margin-top:2px;line-height:1.25}
+.flag{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;margin-top:7px;padding:1px 6px;border-radius:2px}
+.flag-warn{background:var(--signal);color:#fff}
+.flag-ok{background:rgba(239,242,234,.16);color:var(--on-enamel)}
+
+/* ---- plant detail ---- */
+.dphoto{width:100%;max-height:330px;object-fit:cover;border-radius:var(--radius);background:var(--line);display:block}
+.dplate{margin-top:14px}
+.dplate .de{font-family:var(--display);text-transform:uppercase;letter-spacing:.045em;font-weight:700;font-size:clamp(1.4rem,5vw,2rem);line-height:1.05}
+.dplate .bo{font-family:var(--serif);font-style:italic;font-size:1.1rem;opacity:.9;margin-top:4px}
+.dplate .meta{font-family:var(--mono);font-size:.74rem;letter-spacing:.03em;opacity:.75;margin-top:10px}
+.stake{display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-top:16px;
+  font-family:var(--display);text-transform:uppercase;letter-spacing:.08em;font-weight:700;font-size:.8rem;
+  background:var(--signal);color:#fff;padding:11px 17px;border-radius:3px}
+
+/* ---- SIGNATURE: the measuring gauge ---- */
+.gauge{position:relative;height:38px;border:1px solid var(--line);border-radius:3px;background:var(--surface);overflow:hidden;margin-top:18px}
+.gauge-fill{position:absolute;top:0;bottom:0;left:0;width:0;background:var(--signal);opacity:.9;transition:width .13s linear,background .13s linear}
+.gauge-ticks{position:absolute;inset:0;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(to right,var(--tick) 0 1px,transparent 1px 5%),
+    repeating-linear-gradient(to right,var(--tick2) 0 1.5px,transparent 1.5px 25%);
+  background-size:100% 8px,100% 15px;
+  background-position:top left,top left;
+  background-repeat:no-repeat,no-repeat}
+.readout{display:flex;align-items:baseline;gap:9px;margin-top:9px}
+.readout .big{font-family:var(--mono);font-size:1.65rem;font-weight:600;letter-spacing:-.02em}
+.readout .lbl{font-family:var(--display);text-transform:uppercase;letter-spacing:.12em;font-size:.7rem;color:var(--muted)}
+
+/* ---- test ---- */
+.test{max-width:520px;margin:0 auto}
+.test .qphoto{width:100%;max-height:250px;object-fit:contain;border-radius:var(--radius);display:block;margin-bottom:2px}
+.answer-in{width:100%;padding:13px 14px;font:1.15rem var(--serif);font-style:italic;text-align:center;
+  border:1px solid var(--line);border-bottom:2px solid var(--ink);border-radius:3px 3px 0 0;background:var(--surface);color:var(--ink)}
+.answer-in:focus{outline:none;border-bottom-color:var(--signal)}
+.verdict{margin-top:14px;padding:13px 15px;border-radius:3px;border-left:3px solid}
+.verdict-ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.verdict-no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent)}
+.verdict .sol{font-family:var(--serif);font-style:italic;font-size:1.2rem;margin-top:3px}
+.score{font-family:var(--mono);font-size:.8rem;color:var(--muted);text-align:center;margin-top:16px}
+
+/* ---- exam ---- */
+.qa{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:15px 17px;margin:11px 0}
+.qa .q{display:flex;gap:10px;font-weight:600;margin-bottom:10px}
+.qa .q .num{font-family:var(--mono);color:var(--signal);flex:none}
+.mine{width:100%;border:1px solid var(--line);border-radius:3px;background:var(--bg);color:var(--ink);
+  padding:9px 11px;font:.92rem var(--body);resize:vertical;min-height:42px}
+.hints{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.hint{border-left:2px solid var(--signal);padding:6px 11px;font-size:.89rem;background:color-mix(in srgb,var(--signal) 8%,transparent)}
+.sol-box{margin-top:10px;border-left:2px solid var(--ok);padding:10px 13px;font-size:.94rem;background:color-mix(in srgb,var(--ok) 9%,transparent)}
+
+/* ---- tools ---- */
+.tdimg{width:64px;padding:5px 6px}
+.tdimg img{width:54px;height:54px;object-fit:contain;background:#fff;border-radius:3px;border:1px solid var(--line);display:block}
+.credits{font-size:.76rem;color:var(--muted)}
+.credits li{margin:2px 0}
+.tag{display:inline-block;font-family:var(--mono);font-size:.7rem;border:1px solid var(--line);border-radius:2px;padding:1px 7px;margin-left:6px;color:var(--muted)}
+mark{background:var(--signal);color:#fff;border-radius:2px;padding:0 3px}
 </style>
 </head>
 <body>
-<div class="top"><div class="in">
-  <a class="brand" href="#/"><span class="dot"></span> GaLaBau Lernwelt</a>
-  <button class="back" id="backBtn" hidden>← zurück</button>
+<div class="bar"><div class="bar-in">
+  <a class="mark" href="#/"><span class="chip"></span>GaLaBau Lernwelt</a>
+  <button class="back" id="backBtn" hidden>← Zurück</button>
 </div></div>
 <main id="app"></main>
-<footer>Interaktives Lernmaterial · aus dem Unterricht &amp; Treptower Park digitalisiert · <span class="t" data-en="hover a word for English">bewege die Maus über unterstrichene Wörter</span></footer>
+<footer>Lernmaterial aus der Umschulung — Unterricht, Praktikum und Treptower Park.
+<span class="t" data-en="hover a word for its English">Unterstrichene Wörter</span> zeigen die englische Übersetzung.</footer>
 
 <script src="assets/plants.js"></script>
 <script src="assets/cards.js"></script>
 <script src="assets/tools.js"></script>
+<script src="assets/merk.js"></script>
 <script src="assets/topics.js"></script>
 <script>
-/* ============ data ============ */
+/* ================= data ================= */
 const PLANTS=window.PLANTS||[];
 const CARDS=window.CARDS||{};
 const TOOLIMG=window.TOOLIMG||{};
+const MERK=window.MERK||[];
 const TOPICS=window.TOPICS||[];
 const TById=Object.fromEntries(TOPICS.map(t=>[t.id,t]));
-/* test pool: high-confidence Park plants + all Wildhecke (curated class list) */
+/* test pool: verified names only — high-confidence park finds + the curated hedge list */
 const TESTPOOL=PLANTS.filter(p=>p.cats.includes("hecke")||(p.cats.includes("trep")&&p.conf==="high"));
-const TICON={wegebau:"🧱",rasen:"🌱",pflanzenkenntnisse:"📋",sozialversicherung:"💶"};
+const TICON={wegebau:"Wegebau",rasen:"Rasen",pflanzenkenntnisse:"Pflanzenkenntnisse",sozialversicherung:"Sozialversicherung"};
 
-/* Werkzeugkisten (aus dem Geräteschuppen) */
 const WERK=[
  {n:1,img:"img/box1.jpg",t:[["Bügelsäge","bow saw","Handsäge mit Bügel; schnelles Sägen von Ästen"],["Schaufel (Spitz)","pointed shovel","Graben, festen Boden lösen"],["Schaufel (Flach)","flat shovel","Loses Material aufnehmen"],["Schaufel (Rund)","round shovel","Universell schaufeln"],["Teleskopsäge","pole saw","Hohe Äste vom Boden schneiden"],["Fuchsschwanz","handsaw","Holz und dicke Äste"],["Besen","broom","Kehren"]]},
  {n:2,img:"img/box2.jpg",t:[["Bauspaten","digging spade","Ausheben in festem Boden"],["Rodespaten","grubbing spade","Wurzeln roden, schmale Gräben"],["Unkrauthacke","weeding hoe","Unkraut hacken, Boden lockern"],["Plastikfederbesen","fan rake","Laub & Schnittgut zusammenrechen"],["Grubber","cultivator","Beet-Erde lockern"],["Astsäge","pruning saw","Dicke Äste"],["Astschere","loppers","Dickere Äste mit Hebel"],["Handheckenschere","hedge shears","Formschnitt kleiner Hecken"],["Axt","axe","Holz spalten"],["Handgruber","hand cultivator","Beete lockern, Unkraut auskratzen"],["Unkrautstecher","weed puller","Pfahlwurzeln ausstechen"],["Eimer","bucket","Tragen"]]},
@@ -177,83 +208,84 @@ const WERK=[
  {n:4,img:"img/box4.jpg",t:[["Seile","ropes","Sichern, Binden, Ziehen"],["Knieschoner","knee pads","Knieschutz beim Pflastern/Pflanzen"],["Schutzbrillen","safety goggles","Augenschutz"],["Schleifpapier","sandpaper","Schärfen, Glätten"],["Grabegabel","digging fork","Boden lockern, Wurzeln heben"],["Forken","forks","Schnittgut & Mulch wenden"],["Unkrautschuffel","scuffle hoe","Unkraut flach abschneiden"],["Spitzhaken","pickaxe","Steinigen Boden aufbrechen"],["Besen","broom","Kehren"]]}
 ];
 
-/* hub tiles */
-const HUB=[
- {emo:"🌳",title:"Pflanzen",sub:"Namen aus Schule & Treptower Park",route:"#/pflanzen",c:"#3f6f3a",badge:PLANTS.length},
- {emo:"✍️",title:"Namen-Test",sub:"Botanische Namen tippen & prüfen",route:"#/test",c:"#7a5c33",badge:TESTPOOL.length},
- {emo:"📚",title:"Themen",sub:"Wegebau · Rasen · Prüfung · Werkzeug",route:"#/themen",c:"#4c8b3a",badge:TOPICS.length+1}
-];
-
-/* ============ helpers ============ */
+/* ================= helpers ================= */
 const app=document.getElementById("app"), backBtn=document.getElementById("backBtn");
-backBtn.onclick=()=>{ if(history.length>1) history.back(); else location.hash="#/"; };
+backBtn.onclick=()=>{history.length>1?history.back():location.hash="#/";};
 const esc=s=>(""+(s==null?"":s)).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 const escA=s=>esc(s).replace(/"/g,"&quot;");
 function hl(s,t){s=""+(s||"");if(!t)return esc(s);const i=s.toLowerCase().indexOf(t);if(i<0)return esc(s);
- return esc(s.slice(0,i))+"<mark>"+esc(s.slice(i,i+t.length))+"</mark>"+esc(s.slice(i+t.length));}
+  return esc(s.slice(0,i))+"<mark>"+esc(s.slice(i,i+t.length))+"</mark>"+esc(s.slice(i+t.length));}
 function bindTips(){document.querySelectorAll(".t").forEach(el=>{if(el._b)return;el._b=1;
- el.addEventListener("click",e=>{document.querySelectorAll(".t.show").forEach(o=>{if(o!==el)o.classList.remove("show");});el.classList.toggle("show");});});}
+  el.addEventListener("click",()=>{document.querySelectorAll(".t.show").forEach(o=>{if(o!==el)o.classList.remove("show");});el.classList.toggle("show");});});}
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-/* wrap key German terms with English hover tooltips */
 function applyTerms(text,terms){let out=esc(text||"");(terms||[]).forEach(tm=>{if(!tm||!tm.de)return;
   const e=esc(tm.de),i=out.indexOf(e);if(i<0)return;
-  out=out.slice(0,i)+`<span class="t" data-en="${escA(tm.en)}">${e}</span>`+out.slice(i+e.length);});return out;}
-/* Levenshtein distance + normalized similarity for the name test */
+  out=out.slice(0,i)+'<span class="t" data-en="'+escA(tm.en)+'">'+e+'</span>'+out.slice(i+e.length);});return out;}
+/* Levenshtein distance + normalised similarity */
 function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;
   let prev=Array.from({length:n+1},(_,i)=>i),cur=new Array(n+1);
-  for(let i=1;i<=m;i++){cur[0]=i;for(let j=1;j<=n;j++){
-    const c=a[i-1]===b[j-1]?0:1;cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+c);}
-    [prev,cur]=[cur,prev];}return prev[n];}
+  for(let i=1;i<=m;i++){cur[0]=i;for(let j=1;j<=n;j++){const c=a[i-1]===b[j-1]?0:1;
+    cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+c);}[prev,cur]=[cur,prev];}return prev[n];}
 function normBot(s){return (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")
   .replace(/\s[×x]\s/g," ").replace(/×/g," ").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim();}
-function similarity(a,b){a=normBot(a);b=normBot(b);if(!a&&!b)return 1;const L=Math.max(a.length,b.length)||1;
-  return Math.max(0,1-lev(a,b)/L);}
+function similarity(a,b){a=normBot(a);b=normBot(b);if(!a&&!b)return 1;
+  const L=Math.max(a.length,b.length)||1;return Math.max(0,1-lev(a,b)/L);}
 
-/* ============ router ============ */
+/* ================= router ================= */
 function render(){
   const h=location.hash||"#/";
   backBtn.hidden=(h==="#/"||h==="");
   window.scrollTo(0,0);
-  if(h==="#/"||h==="") return renderHub();
+  if(h==="#/"||h==="") return renderHome();
   if(h==="#/pflanzen") return renderPflanzen();
   if(h.startsWith("#/p/")) return renderPlant(+h.slice(4));
   if(h==="#/test") return renderTest();
+  if(h==="#/merk") return renderMerk();
   if(h==="#/themen") return renderThemen();
   if(h==="#/werkzeuge") return renderWerk();
   if(h.startsWith("#/t/")) return renderTopic(h.slice(4));
-  renderHub();
+  renderHome();
 }
 window.addEventListener("hashchange",render);
 
-/* ============ hub ============ */
-function renderHub(){
-  app.innerHTML=`<div class="hero"><h1>GaLaBau Lernwelt 🌿</h1>
-    <p>Was ich in der Umschulung gelernt habe – Pflanzennamen aus Schule und Treptower Park,
-    ein Namen-Test und die Unterrichts-Themen. Tippe auf eine Kachel.</p></div>
-    <div class="grid">${HUB.map(t=>`<a class="tile" href="${t.route}" style="--tc:${t.c}">
-      <span class="bar"></span>${t.badge?`<span class="badge">${t.badge}</span>`:""}
-      <span class="emo">${t.emo}</span><h3>${t.title}</h3><p>${t.sub}</p></a>`).join("")}</div>`;
+/* ================= home ================= */
+function renderHome(){
+  const toolCount=WERK.reduce((a,b)=>a+b.t.length,0);
+  const items=[
+    {n:"Pflanzen",d:"Namen aus Unterricht, Praktikum und Treptower Park",c:PLANTS.length+" Arten",r:"#/pflanzen"},
+    {n:"Namen-Test",d:"Botanischen Namen tippen — Abweichung wird gemessen",c:TESTPOOL.length+" geprüft",r:"#/test"},
+    {n:"Merkhilfen",d:"Gruppen, die das Auswendiglernen tragen",c:MERK.length+" Gruppen",r:"#/merk"},
+    {n:"Themen",d:"Spickzettel und Prüfungsfragen aus dem Unterricht",c:TOPICS.length+" Themen",r:"#/themen"},
+    {n:"Werkzeug",d:"Die vier Kisten aus dem Geräteschuppen",c:toolCount+" Werkzeuge",r:"#/werkzeuge"}
+  ].filter(i=>!i.c.startsWith("0 "));
+  app.innerHTML=
+    '<div class="plate"><h1>GaLaBau<br>Lernwelt</h1>'+
+    '<div class="sub">Umschulung Garten- und Landschaftsbau · Berlin 2026</div></div>'+
+    '<div class="horizon"></div>'+
+    '<ul class="board">'+items.map(i=>
+      '<li><a href="'+i.r+'"><span class="n">'+esc(i.n)+'</span><span class="d">'+esc(i.d)+'</span>'+
+      '<span class="c">'+esc(i.c)+'</span></a></li>').join("")+'</ul>';
   bindTips();
 }
 
-/* ============ Pflanzen: Liste -> Detail ============ */
-const FILTERS=[["alle","Alle"],["trep","🌳 Park"],["hecke","🌿 Hecke"]];
-function confFlag(p){
+/* ================= plants ================= */
+const FILTERS=[["alle","Alle"],["trep","Park"],["hecke","Hecke"]];
+function flagFor(p){
   if(p.cats.includes("trep")){
-    if(p.conf==="high")return `<span class="flag g">🌳 Park</span>`;
-    if(p.conf==="medium")return `<span class="flag warn">⚠ prüfen</span>`;
-    return `<span class="flag warn">⚠ unsicher</span>`;
+    if(p.conf==="high") return '<span class="flag flag-ok">Park</span>';
+    if(p.conf==="medium") return '<span class="flag flag-warn">prüfen</span>';
+    return '<span class="flag flag-warn">unsicher</span>';
   }
-  return `<span class="flag g">🌿 Hecke</span>`;
+  return '<span class="flag flag-ok">Hecke</span>';
 }
 function renderPflanzen(){
-  app.innerHTML=`<div class="hero"><h1>🌳 Pflanzen</h1>
-    <p class="lead">${PLANTS.length} Arten – im Unterricht und im Treptower Park gelernt. Tippe eine Pflanze für Details, Merkmal und Karte.</p></div>
-    <div class="note">🔎 Die Park-Pflanzen sind per Foto bestimmt (KI). „⚠ prüfen/unsicher" heißt: im Unterricht gegenchecken.</div>
-    <div class="controls"><input id="q" type="search" placeholder="🔎 suchen (Deutsch, Botanisch) …" autocomplete="off">
-      <div class="chips" id="chips">${FILTERS.map((f,i)=>`<button class="chip${i===0?" on":""}" data-c="${f[0]}">${f[1]}</button>`).join("")}</div>
-      <div class="count" id="cnt"></div></div>
-    <div class="pgrid" id="pg"></div>`;
+  app.innerHTML=
+    '<p class="eyebrow">Bestand</p><h2 class="disp" style="font-size:1.7rem;margin:0">Pflanzen</h2>'+
+    '<p class="lead">'+PLANTS.length+' Arten, die im Unterricht, im Praktikum oder auf dem Baumspaziergang im Treptower Park dran waren.</p>'+
+    '<p class="hint-note">Die Park-Arten sind anhand der Fotos bestimmt. Was als <b>prüfen</b> oder <b>unsicher</b> markiert ist, gehört im Unterricht gegengecheckt.</p>'+
+    '<input id="q" class="field" type="search" placeholder="Suchen — deutsch oder botanisch" autocomplete="off">'+
+    '<div class="chips" id="chips">'+FILTERS.map((f,i)=>'<button class="chip-btn'+(i?"":" on")+'" data-c="'+f[0]+'">'+f[1]+'</button>').join("")+'</div>'+
+    '<p class="count" id="cnt"></p><div class="pgrid" id="pg"></div>';
   let active="alle";
   const q=document.getElementById("q"),pg=document.getElementById("pg"),cnt=document.getElementById("cnt");
   document.getElementById("chips").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;
@@ -263,165 +295,170 @@ function renderPflanzen(){
     PLANTS.forEach((p,idx)=>{
       if(active!=="alle"&&!p.cats.includes(active))return;
       if(t&&!((p.de+" "+p.bot+" "+p.fam).toLowerCase().includes(t)))return;n++;
-      const a=document.createElement("a");a.className="pc";a.href="#/p/"+idx;
-      a.innerHTML=(p.img?`<img loading="lazy" src="${p.img}" alt="">`:`<div class="ph">🌿</div>`)+
-        `<div class="de">${hl(p.de,t)}</div><div class="bot">${hl(p.bot,t)}</div>${confFlag(p)}`;
+      const a=document.createElement("a");a.className="pcard";a.href="#/p/"+idx;
+      a.innerHTML=(p.img?'<img class="ph" loading="lazy" src="'+p.img+'" alt="">':'<div class="noph">◻</div>')+
+        '<div class="label"><div class="de">'+hl(p.de,t)+'</div><div class="bo">'+hl(p.bot,t)+'</div>'+flagFor(p)+'</div>';
       pg.appendChild(a);});
-    cnt.textContent=`${n} von ${PLANTS.length} Pflanzen`;}
+    cnt.textContent=n+" von "+PLANTS.length+" Arten";}
   draw();
 }
 function renderPlant(idx){
   const p=PLANTS[idx];if(!p){location.hash="#/pflanzen";return;}
   const c=CARDS[p.bot]||{};
-  const cats=p.cats.map(x=>x==="trep"?"Treptower Park":"Wildhecke");
-  let badge="";
-  if(p.cats.includes("trep")){
-    badge = p.conf==="high" ? `<span class="flag g">Foto-Bestimmung: sicher</span>`
-          : p.conf==="medium" ? `<span class="flag warn">⚠ Bestimmung zu prüfen</span>`
-          : `<span class="flag warn">⚠ Bestimmung unsicher</span>`;
-  }
-  const natTxt={"✅":"heimisch ✅","⚠️":"nur bedingt heimisch ⚠️","❌":"nicht heimisch ❌"}[p.nat];
-  app.innerHTML=`
-    ${p.img?`<img class="dhero" src="${p.img}" alt="${escA(p.de)}">`:`<div class="dph">🌿</div>`}
-    <h1 class="dname">${esc(p.de)}</h1>
-    <div class="dbot">${esc(p.bot)}</div>
-    <div class="dmeta">Familie: ${esc(p.fam||"—")} · ${cats.map(x=>`<span>${esc(x)}</span>`).join(" · ")}${natTxt?" · "+natTxt:""}</div>
-    <div>${badge}</div>
-    ${c.merkmal?`<div class="card"><h3>🔍 Merkmal – so erkennt man sie</h3><p>${applyTerms(c.merkmal,c.terms)}</p></div>`:""}
-    ${c.tipp?`<div class="card"><h3>💡 Tipp</h3><p>${applyTerms(c.tipp,c.terms)}</p></div>`:""}
-    ${p.lat!=null?`<a class="maplink" target="_blank" rel="noopener"
-       href="https://www.google.com/maps?q=${p.lat},${p.lon}">📍 Standort im Treptower Park öffnen</a>`:""}
-  `;
+  const where=p.cats.map(x=>x==="trep"?"Treptower Park":"Wildhecke").join(" · ");
+  const nat={"✅":"heimisch","⚠️":"nur lokal heimisch","❌":"nicht heimisch"}[p.nat];
+  let conf="";
+  if(p.cats.includes("trep")) conf = p.conf==="high" ? "Bestimmung gesichert"
+    : p.conf==="medium" ? "Bestimmung zu prüfen" : "Bestimmung unsicher";
+  app.innerHTML=
+    (p.img?'<img class="dphoto" src="'+p.img+'" alt="'+escA(p.de)+'">':"")+
+    '<div class="plate dplate"><div class="de">'+esc(p.de)+'</div>'+
+    '<div class="bo">'+esc(p.bot)+'</div>'+
+    '<div class="meta">'+esc(p.fam||"—")+(where?" · "+esc(where):"")+(nat?" · "+esc(nat):"")+(conf?" · "+esc(conf):"")+'</div></div>'+
+    (c.merkmal?'<div class="card"><h3>Merkmal</h3><p>'+applyTerms(c.merkmal,c.terms)+'</p></div>':"")+
+    (c.tipp?'<div class="card"><h3>Tipp</h3><p>'+applyTerms(c.tipp,c.terms)+'</p></div>':"")+
+    (p.lat!=null?'<a class="stake" target="_blank" rel="noopener" href="https://www.google.com/maps?q='+p.lat+','+p.lon+'">Standort im Park öffnen</a>':"");
   bindTips();
 }
 
-/* ============ Namen-Test (Levenshtein) ============ */
+/* ================= Namen-Test (signature gauge) ================= */
 function renderTest(){
-  app.innerHTML=`<div class="hero"><h1>✍️ Namen-Test</h1>
-    <p class="lead">Wie heißt die Pflanze botanisch? Tippe den Namen – der Balken zeigt live, wie nah du bist.</p></div>
-    <div class="note">Getestet werden ${TESTPOOL.length} gesicherte Namen (Wildhecke + sichere Park-Pflanzen). Unsichere Park-Bestimmungen sind ausgenommen.</div>
-    <div class="test" id="test"></div>`;
+  app.innerHTML=
+    '<p class="eyebrow">Prüfen</p><h2 class="disp" style="font-size:1.7rem;margin:0">Namen-Test</h2>'+
+    '<p class="lead">Wie heißt die Pflanze botanisch? Der Maßstab zeigt, wie weit die Eingabe vom richtigen Namen abweicht.</p>'+
+    '<p class="hint-note">Geprüft werden '+TESTPOOL.length+' gesicherte Namen. Unsichere Park-Bestimmungen bleiben außen vor.</p>'+
+    '<div class="test" id="test"></div>';
   let deck=shuffle(TESTPOOL),i=0,right=0,done=0,revealed=false;
   const box=document.getElementById("test");
   function show(){
     const p=deck[i];revealed=false;
-    box.innerHTML=`<div class="testcard">
-      ${p.img?`<img src="${p.img}" alt="">`:`<div style="font-size:2.4rem;margin:6px">🌿</div>`}
-      <div class="qde">${esc(p.de)}</div>
-      <div class="qfam">Familie: ${esc(p.fam||"—")}</div>
-      <input id="ans" type="text" placeholder="Gattung Art …" autocomplete="off" autocapitalize="off" spellcheck="false">
-      <div class="simwrap"><div class="simtrack"><div class="simfill" id="fill"></div></div>
-        <div class="simtxt" id="simtxt">Tippe den botanischen Namen …</div></div>
-      <div id="vbox"></div>
-      <div class="qbtns" style="justify-content:center">
-        <button class="btn p" id="check">Prüfen</button>
-        <button class="btn" id="skip">Überspringen</button>
-        <button class="btn" id="next" hidden>Nächste →</button>
-      </div>
-    </div>
-    <div class="score" id="score"></div>`;
-    const ans=document.getElementById("ans"),fill=document.getElementById("fill"),
-      simtxt=document.getElementById("simtxt"),vbox=document.getElementById("vbox"),
-      check=document.getElementById("check"),next=document.getElementById("next"),skip=document.getElementById("skip");
-    updScore();ans.focus();
-    ans.addEventListener("input",()=>{ if(revealed) return;
-      const s=similarity(ans.value,p.bot),pct=Math.round(s*100);
-      fill.style.width=pct+"%";
-      fill.style.background=s>=.9?"var(--ok)":s>=.6?"var(--warn)":"var(--bad)";
-      simtxt.textContent=ans.value.trim()?`Übereinstimmung: ${pct}%`:"Tippe den botanischen Namen …";
-    });
+    box.innerHTML=
+      (p.img?'<img class="qphoto" src="'+p.img+'" alt="">':"")+
+      '<div class="plate" style="margin-bottom:14px"><div class="de disp" style="font-size:1.4rem">'+esc(p.de)+'</div>'+
+      '<div class="meta mono" style="font-size:.74rem;opacity:.75;margin-top:6px">'+esc(p.fam||"—")+'</div></div>'+
+      '<input id="ans" class="answer-in" type="text" placeholder="Gattung Art" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Botanischer Name">'+
+      '<div class="gauge"><div class="gauge-fill" id="fill"></div><div class="gauge-ticks"></div></div>'+
+      '<div class="readout"><span class="big" id="pct">—</span><span class="lbl">Übereinstimmung</span></div>'+
+      '<div id="vbox" aria-live="polite"></div>'+
+      '<div class="btnrow" style="justify-content:center">'+
+        '<button class="btn btn-solid" id="check">Prüfen</button>'+
+        '<button class="btn" id="skip">Überspringen</button>'+
+        '<button class="btn btn-solid" id="next" hidden>Nächste</button>'+
+      '</div><p class="score" id="score"></p>';
+    const ans=document.getElementById("ans"),fill=document.getElementById("fill"),pct=document.getElementById("pct"),
+      vbox=document.getElementById("vbox"),check=document.getElementById("check"),
+      next=document.getElementById("next"),skip=document.getElementById("skip");
+    upd();ans.focus();
+    ans.addEventListener("input",()=>{if(revealed)return;
+      const s=similarity(ans.value,p.bot),v=Math.round(s*100);
+      fill.style.width=v+"%";
+      fill.style.background=s>=.9?"var(--ok)":s>=.6?"var(--signal)":"var(--bad)";
+      pct.textContent=ans.value.trim()?v:"—";});
     ans.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();revealed?next.click():doCheck();}});
-    check.onclick=doCheck; skip.onclick=()=>{reveal(false,true);}; next.onclick=()=>{i=(i+1)%deck.length;if(i===0)deck=shuffle(deck);show();};
+    check.onclick=doCheck;
+    skip.onclick=()=>reveal(false,true,0);
+    next.onclick=()=>{i=(i+1)%deck.length;if(i===0)deck=shuffle(deck);show();};
     function doCheck(){const s=similarity(ans.value,p.bot);reveal(s>=0.9,false,s);}
     function reveal(ok,skipped,s){
       revealed=true;done++;if(ok)right++;
       check.hidden=true;skip.hidden=true;next.hidden=false;ans.disabled=true;next.focus();
-      if(!skipped){fill.style.width=Math.round((s||0)*100)+"%";fill.style.background=ok?"var(--ok)":"var(--bad)";}
-      vbox.innerHTML=`<div class="verdict ${ok?"ok":"no"}">
-        ${skipped?"⏭️ Übersprungen.":ok?"✅ Richtig!":"❌ Noch nicht ganz."}
-        <div class="cor">${esc(p.bot)}</div></div>`;
-      updScore();
-    }
-    function updScore(){document.getElementById("score").textContent=`Richtig: ${right} / ${done}  ·  Pflanze ${((i)%deck.length)+1} von ${deck.length}`;}
+      const v=Math.round((s||0)*100);
+      fill.style.width=v+"%";fill.style.background=ok?"var(--ok)":"var(--bad)";pct.textContent=v;
+      vbox.innerHTML='<div class="verdict '+(ok?"verdict-ok":"verdict-no")+'">'+
+        (skipped?"Übersprungen":ok?"Richtig":"Noch nicht")+
+        '<div class="sol">'+esc(p.bot)+'</div></div>';
+      upd();}
+    function upd(){document.getElementById("score").textContent="Richtig "+right+" / "+done+"  ·  Karte "+(i+1)+" von "+deck.length;}
   }
   show();
 }
 
-/* ============ Themen (Liste) ============ */
-function renderThemen(){
-  const items=TOPICS.map(t=>({emo:TICON[t.id]||"📋",title:t.title,sub:(t.exam?t.exam.length+" Fragen":"")+(t.tutorial?` · ${t.tutorial.length} Spickzettel`:""),route:"#/t/"+t.id}));
-  items.push({emo:"🧰",title:"Werkzeugkisten",sub:WERK.reduce((a,b)=>a+b.t.length,0)+" Werkzeuge · 4 Kisten",route:"#/werkzeuge"});
-  app.innerHTML=`<div class="hero"><h1>📚 Themen</h1><p class="lead">Unterrichtsstoff mit Spickzettel und interaktiven Prüfungsfragen.</p></div>
-    <div class="nav">${items.map(it=>`<a href="${it.route}"><span class="em">${it.emo}</span>
-      <span class="tx"><b>${esc(it.title)}</b><span>${esc(it.sub)}</span></span><span class="ar">→</span></a>`).join("")}</div>`;
+/* ================= Merkhilfen ================= */
+function renderMerk(){
+  app.innerHTML=
+    '<p class="eyebrow">Gedächtnis</p><h2 class="disp" style="font-size:1.7rem;margin:0">Merkhilfen</h2>'+
+    '<p class="lead">Statt 49 Einzelnamen: Gruppen, die zusammengehören. So hängt sich das Wissen an etwas auf.</p>'+
+    MERK.map(g=>'<div class="card"><h3>'+esc(g.titel)+'</h3>'+
+      (g.hinweis?'<p>'+esc(g.hinweis)+'</p>':"")+
+      '<p>'+g.arten.map(a=>'<span class="tag" style="margin:2px 6px 2px 0">'+esc(a)+'</span>').join("")+'</p></div>').join("");
+  bindTips();
 }
 
-/* ============ class topic: tutorial + interactive exam ============ */
+/* ================= Themen ================= */
+function renderThemen(){
+  const items=TOPICS.map(t=>({n:TICON[t.id]||t.title,d:t.intro?t.intro.slice(0,72):"",
+    c:(t.exam?t.exam.length+" Fragen":""),r:"#/t/"+t.id}));
+  app.innerHTML=
+    '<p class="eyebrow">Unterricht</p><h2 class="disp" style="font-size:1.7rem;margin:0">Themen</h2>'+
+    '<p class="lead">Spickzettel zuerst, dann Prüfungsfragen mit gestuften Hinweisen.</p>'+
+    '<ul class="board">'+items.map(i=>'<li><a href="'+i.r+'"><span class="n">'+esc(i.n)+'</span>'+
+      '<span class="c">'+esc(i.c)+'</span></a></li>').join("")+'</ul>';
+}
 function renderTopic(id){
-  const t=TById[id]; if(!t){location.hash="#/themen";return;}
-  app.innerHTML=`<div class="hero"><h1>${esc(t.title)}</h1><p class="lead">${esc(t.intro)}</p></div>
-    <h2 class="sec">📖 Spickzettel</h2>
-    ${t.tutorial.map(s=>`<div class="card"><h3>${esc(s.heading)}</h3>${s.html}</div>`).join("")}
-    <h2 class="sec">📝 Prüfungsfragen <span class="count">– Antworten sind versteckt. Erst selbst überlegen!</span></h2>
-    <div id="exam"></div>`;
+  const t=TById[id];if(!t){location.hash="#/themen";return;}
+  app.innerHTML=
+    '<p class="eyebrow">Thema</p><h2 class="disp" style="font-size:1.65rem;margin:0">'+esc(t.title)+'</h2>'+
+    '<p class="lead">'+esc(t.intro)+'</p>'+
+    '<h3 class="sec">Spickzettel</h3>'+
+    t.tutorial.map(s=>'<div class="card"><h3>'+esc(s.heading)+'</h3>'+s.html+'</div>').join("")+
+    '<h3 class="sec">Prüfungsfragen</h3>'+
+    '<p class="hint-note">Antworten sind verdeckt. Erst selbst überlegen, dann Hinweise holen.</p>'+
+    '<div id="exam"></div>';
   const ex=document.getElementById("exam");
   t.exam.forEach((e,i)=>ex.appendChild(examCard(e,i+1)));
   bindTips();
 }
 function examCard(e,num){
   const d=document.createElement("div");d.className="qa";
-  d.innerHTML=`<div class="qtext"><b>${num}.</b> ${esc(e.q)}</div>
-    <textarea class="mine" placeholder="Deine Antwort (optional zum Selbsttest) …"></textarea>
-    <div class="qbtns">
-      ${(e.hints&&e.hints.length)?`<button class="btn hb">💡 Hinweis</button>`:""}
-      <button class="btn p ab">Antwort zeigen</button>
-    </div>
-    <div class="hints"></div>
-    <div class="answer" hidden></div>`;
-  const hintsBox=d.querySelector(".hints"), ansBox=d.querySelector(".answer");
-  const hb=d.querySelector(".hb"), ab=d.querySelector(".ab");
+  d.innerHTML='<div class="q"><span class="num">'+num+'</span><span>'+esc(e.q)+'</span></div>'+
+    '<textarea class="mine" placeholder="Deine Antwort — nur für dich"></textarea>'+
+    '<div class="btnrow">'+((e.hints&&e.hints.length)?'<button class="btn hb">Hinweis</button>':"")+
+    '<button class="btn btn-solid ab">Antwort zeigen</button></div>'+
+    '<div class="hints"></div><div class="sol-box" hidden></div>';
+  const hintsBox=d.querySelector(".hints"),solBox=d.querySelector(".sol-box"),
+    hb=d.querySelector(".hb"),ab=d.querySelector(".ab");
   let hi=0;
   if(hb) hb.onclick=()=>{
     if(hi>=e.hints.length)return;
-    const el=document.createElement("div");el.className="hint";el.innerHTML="💡 "+e.hints[hi];hintsBox.appendChild(el);
-    hi++; if(hi>=e.hints.length){hb.textContent="Alle Hinweise gezeigt";hb.disabled=true;} else hb.textContent=`💡 Hinweis ${hi+1}/${e.hints.length}`;
-    bindTips();
-  };
+    const el=document.createElement("div");el.className="hint";el.innerHTML=e.hints[hi];hintsBox.appendChild(el);
+    hi++;if(hi>=e.hints.length){hb.textContent="Keine weiteren";hb.disabled=true;}
+    else hb.textContent="Hinweis "+(hi+1)+" von "+e.hints.length;
+    bindTips();};
   let shown=false;
-  ab.onclick=()=>{shown=!shown;ansBox.hidden=!shown;ab.textContent=shown?"Antwort verbergen":"Antwort zeigen";
-    if(shown&&!ansBox.innerHTML){ansBox.innerHTML="<b>Antwort:</b> "+e.answer;bindTips();}};
+  ab.onclick=()=>{shown=!shown;solBox.hidden=!shown;ab.textContent=shown?"Antwort verbergen":"Antwort zeigen";
+    if(shown&&!solBox.innerHTML){solBox.innerHTML=e.answer;bindTips();}};
   return d;
 }
 
-/* ============ Werkzeugkisten ============ */
+/* ================= Werkzeug ================= */
 function renderWerk(){
-  app.innerHTML=`<div class="hero"><h1>🧰 Werkzeugkisten</h1>
-    <p class="lead">Die 4 Kisten aus dem Geräteschuppen · Deutsch / English + Verwendung.</p></div>
-    <div class="controls"><input id="q" type="search" placeholder="🔎 Werkzeug suchen …" autocomplete="off"><div class="count" id="cnt"></div></div>
-    <div id="wb"></div>`;
-  const q=document.getElementById("q"),wb=document.getElementById("wb"),cnt=document.getElementById("cnt");
   const total=WERK.reduce((a,b)=>a+b.t.length,0);
+  app.innerHTML=
+    '<p class="eyebrow">Geräteschuppen</p><h2 class="disp" style="font-size:1.7rem;margin:0">Werkzeug</h2>'+
+    '<p class="lead">Die vier Kisten — deutsch, englisch und wofür man es nimmt.</p>'+
+    '<input id="q" class="field" type="search" placeholder="Werkzeug suchen" autocomplete="off">'+
+    '<p class="count" id="cnt"></p><div id="wb"></div>';
+  const q=document.getElementById("q"),wb=document.getElementById("wb"),cnt=document.getElementById("cnt");
   function draw(){const t=q.value.trim().toLowerCase();wb.innerHTML="";let n=0;const used={};
-    for(const b of WERK){const rows=b.t.filter(r=>!t||(r[0]+" "+r[1]+" "+r[2]).toLowerCase().includes(t));if(!rows.length)continue;n+=rows.length;
+    for(const b of WERK){
+      const rows=b.t.filter(r=>!t||(r[0]+" "+r[1]+" "+r[2]).toLowerCase().includes(t));
+      if(!rows.length)continue;n+=rows.length;
       const c=document.createElement("div");c.className="card";
-      c.innerHTML=`<div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">
-        <img loading="lazy" src="${b.img}" alt="BOX ${b.n}" style="width:56px;height:56px;object-fit:cover;border-radius:9px;border:1px solid var(--line)">
-        <h3 style="margin:0">BOX ${b.n} <span class="tag">${rows.length}</span></h3></div>
-        <table><thead><tr><th></th><th>Deutsch</th><th>English</th><th>Verwendung</th></tr></thead><tbody>
-        ${rows.map(r=>{const ti=TOOLIMG[r[0]];if(ti)used[r[0]]=ti;
-          return `<tr><td class="tdimg">${ti?`<a href="${ti.page}" target="_blank" rel="noopener" title="${escA(ti.artist+" · "+ti.lic+" (Wikimedia Commons)")}"><img loading="lazy" src="${ti.img}" alt="${escA(r[0])}"></a>`:""}</td>
-          <td><b>${hl(r[0],t)}</b></td><td style="color:var(--muted);font-style:italic">${hl(r[1],t)}</td><td>${hl(r[2],t)}</td></tr>`;}).join("")}
-        </tbody></table>`;
+      c.innerHTML='<h3>Kiste '+b.n+'<span class="tag">'+rows.length+'</span></h3>'+
+        '<table><thead><tr><th></th><th>Deutsch</th><th>English</th><th>Verwendung</th></tr></thead><tbody>'+
+        rows.map(r=>{const ti=TOOLIMG[r[0]];if(ti)used[r[0]]=ti;
+          return '<tr><td class="tdimg">'+(ti?'<a href="'+ti.page+'" target="_blank" rel="noopener" title="'+escA(ti.artist+" · "+ti.lic)+'"><img loading="lazy" src="'+ti.img+'" alt="'+escA(r[0])+'"></a>':"")+'</td>'+
+          '<td><b>'+hl(r[0],t)+'</b></td><td style="color:var(--muted)"><i>'+hl(r[1],t)+'</i></td><td>'+hl(r[2],t)+'</td></tr>';}).join("")+
+        '</tbody></table>';
       wb.appendChild(c);}
     const names=Object.keys(used);
     if(names.length){const cr=document.createElement("div");cr.className="card";
-      cr.innerHTML=`<h3>📷 Bildnachweise</h3>
-        <p class="credits">Die Werkzeugfotos stammen von <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>
-        und stehen unter freien Lizenzen. Die Kisten-Fotos oben sind eigene Aufnahmen.</p>
-        <ul class="credits">${names.map(k=>{const i=used[k];
-          return `<li><b>${esc(k)}</b> – ${esc(i.artist||"unbekannt")}, <a href="${i.page}" target="_blank" rel="noopener">${esc(i.lic)}</a></li>`;}).join("")}</ul>`;
+      cr.innerHTML='<h3>Bildnachweise</h3><p class="credits">Werkzeugfotos von '+
+        '<a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a> unter freien Lizenzen. '+
+        'Die Kistenfotos sind eigene Aufnahmen.</p><ul class="credits">'+
+        names.map(k=>{const it=used[k];return '<li><b>'+esc(k)+'</b> — '+esc(it.artist||"unbekannt")+', <a href="'+it.page+'" target="_blank" rel="noopener">'+esc(it.lic)+'</a></li>';}).join("")+'</ul>';
       wb.appendChild(cr);}
-    cnt.textContent=`${n} von ${total} Werkzeugen · 4 Kisten`;}
+    cnt.textContent=n+" von "+total+" Werkzeugen · 4 Kisten";}
   q.addEventListener("input",draw);draw();
 }
 
