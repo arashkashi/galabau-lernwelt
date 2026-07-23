@@ -163,15 +163,64 @@ footer{max-width:800px;margin:0 auto;padding:0 18px 46px;color:var(--muted);font
 .credits li{margin:2px 0}
 .tag{display:inline-block;font-family:var(--mono);font-size:.7rem;border:1px solid var(--line);border-radius:2px;padding:1px 7px;margin-left:6px;color:var(--muted)}
 mark{background:var(--signal);color:#fff;border-radius:2px;padding:0 3px}
+
+/* ---- progress icon + overlay sheet ---- */
+.iconbtn{font-size:1rem;line-height:1;color:var(--muted);background:none;border:1px solid var(--line);border-radius:3px;
+  padding:5px 9px;cursor:pointer;flex:none}
+.iconbtn:hover{color:var(--ink);border-color:var(--ink)}
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(10,14,11,.55);display:flex;align-items:flex-end;justify-content:center;padding:0}
+.overlay[hidden]{display:none}
+@media(min-width:560px){.overlay{align-items:center;padding:20px}}
+.sheet{background:var(--bg);border:1px solid var(--line);border-radius:14px 14px 0 0;width:100%;max-width:520px;
+  max-height:88vh;overflow:auto;padding:20px 20px 28px}
+@media(min-width:560px){.sheet{border-radius:12px}}
+.sheet h3{font-family:var(--display);text-transform:uppercase;letter-spacing:.08em;font-size:1.05rem;margin:0 0 4px}
+.statrow{display:flex;gap:10px;margin:14px 0}
+.stat{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:11px;text-align:center}
+.stat .v{font-family:var(--mono);font-size:1.5rem;font-weight:600}
+.stat .k{font-family:var(--display);text-transform:uppercase;letter-spacing:.08em;font-size:.62rem;color:var(--muted);margin-top:2px}
+.iobox{margin-top:14px}
+.iobox textarea{width:100%;min-height:64px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);
+  font:.78rem var(--mono);padding:8px;resize:vertical}
+.msg{font-size:.82rem;margin-top:8px}
+.msg.ok{color:var(--ok)} .msg.bad{color:var(--bad)}
+
+/* ---- learn / SRS ---- */
+.progbar{height:8px;border-radius:99px;background:var(--surface);border:1px solid var(--line);overflow:hidden;margin:16px 0 6px}
+.progbar>span{display:block;height:100%;background:var(--enamel)}
+.masterbar>span{background:var(--ok)}
+.learncard{max-width:520px;margin:0 auto}
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.grades button{font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-weight:700;font-size:.72rem;
+  padding:12px 4px;border-radius:4px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.2}
+.grades button small{display:block;font-family:var(--mono);font-size:.62rem;color:var(--muted);margin-top:3px;letter-spacing:0}
+.g-again{border-color:var(--bad)} .g-again:hover{background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.g-good{border-color:var(--ok)} .g-good:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.g-easy:hover,.g-hard:hover{border-color:var(--signal)}
+.cardback{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--ok);border-radius:6px;padding:13px 15px;margin-top:12px;font-size:1rem}
+.done-emo{font-size:2.4rem;text-align:center;margin:10px 0}
+
+/* ---- typed-answer diff + meaning (learn faster) ---- */
+.diffline{font-family:var(--mono);font-size:1.05rem;margin-top:12px;word-break:break-word}
+.diffline .lbl{font-family:var(--display);text-transform:uppercase;letter-spacing:.08em;font-size:.62rem;color:var(--muted);display:block;margin-bottom:2px}
+.d-ok{color:var(--ok)}
+.d-bad{color:var(--bad);text-decoration:line-through}
+.d-miss{color:var(--signal);border-bottom:2px solid var(--signal)}
+.editsaway{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-top:4px;min-height:1em}
+.meaningbox{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin-top:12px;font-size:.9rem}
+.meaningbox .mm{color:var(--muted);margin-top:6px}
+.meaningbox b{font-family:var(--display);text-transform:uppercase;letter-spacing:.06em;font-size:.68rem;color:var(--muted);display:block;margin-bottom:3px;font-weight:700}
 </style>
 </head>
 <body>
 <div class="bar"><div class="bar-in">
   <a class="mark" href="#/"><span class="chip"></span>GaLaBau Lernwelt</a>
   <div class="langtoggle" id="langtoggle"><button data-l="de">DE</button><button data-l="en">EN</button></div>
+  <button class="iconbtn" id="progBtn" aria-label="Fortschritt">⇅</button>
   <button class="back" id="backBtn" hidden>←</button>
 </div></div>
 <main id="app"></main>
+<div class="overlay" id="overlay" hidden><div class="sheet" id="sheet"></div></div>
 <footer id="foot"></footer>
 
 <script src="assets/plants.js"></script>
@@ -180,6 +229,8 @@ mark{background:var(--signal);color:#fff;border-radius:2px;padding:0 3px}
 <script src="assets/merk.js"></script>
 <script src="assets/topics.js"></script>
 <script src="assets/topics_en.js"></script>
+<script src="assets/namemean.js"></script>
+<script src="assets/srs_cards.js"></script>
 <script>
 /* ================= data ================= */
 const PLANTS=window.PLANTS||[];
@@ -191,6 +242,14 @@ const TOPICS=window.TOPICS||[];
 const TOPICS_EN=window.TOPICS_EN||{};
 const TById=Object.fromEntries(TOPICS.map(t=>[t.id,t]));
 const TESTPOOL=PLANTS.filter(p=>p.cats.includes("hecke")||(p.cats.includes("trep")&&p.conf==="high"));
+const NAMEMEAN=window.NAMEMEAN||{};
+const SRS_CARDS=window.SRS_CARDS||[];
+/* SRS item registry: typed plant-names (auto-graded) + self-rated concept cards */
+const ITEMS=[
+  ...TESTPOOL.map(p=>({id:"v:"+p.bot,type:"vocab",plant:p})),
+  ...SRS_CARDS.map(c=>({id:c.id,type:"concept",card:c}))
+];
+const ITEM_BY=Object.fromEntries(ITEMS.map(it=>[it.id,it]));
 
 const WERK=[
  {n:1,img:"img/box1.jpg",t:[["Bügelsäge","bow saw","Handsäge mit Bügel; schnelles Sägen von Ästen"],["Schaufel (Spitz)","pointed shovel","Graben, festen Boden lösen"],["Schaufel (Flach)","flat shovel","Loses Material aufnehmen"],["Schaufel (Rund)","round shovel","Universell schaufeln"],["Teleskopsäge","pole saw","Hohe Äste vom Boden schneiden"],["Fuchsschwanz","handsaw","Holz und dicke Äste"],["Besen","broom","Kehren"]]},
@@ -268,6 +327,32 @@ const UI={
   credits_h:"Image credits", credits_p:"Tool and wild-hedge photos from Wikimedia Commons under free licences. Box photos and park shots are my own."
  }
 };
+Object.assign(UI.de,{
+  n_learn:"Lernen", d_learn:"Wiederholen im richtigen Abstand — bis es sitzt", c_due:"fällig",
+  eb_learn:"Spaced Repetition", lead_learn:"Karten kommen im wachsenden Abstand wieder — je sicherer, desto seltener. Kurze Einheiten, langer Effekt.",
+  ln_due:"Fällig", ln_new:"Neu", ln_learned:"Gelernt", ln_start:"Einheit starten", ln_none:"Nichts fällig — alles sitzt gerade. Schau später wieder rein.",
+  ln_addnew:"Neue Karten dazunehmen", ln_of:"von", ln_left:"übrig", ln_done_t:"Einheit geschafft!", ln_done_s:"Karten in dieser Runde", ln_again_btn:"Weiter lernen", ln_home_btn:"Zur Übersicht",
+  g_again:"Nochmal", g_hard:"Schwer", g_good:"Gut", g_easy:"Leicht",
+  g_again_s:"< 1 Min", g_hard_s:"kürzer", showans:"Antwort zeigen", knew:"Wusste ich", didnt:"Wusste ich nicht",
+  yourans:"Deine Eingabe", correct_w:"Richtig", edits1:"Änderung entfernt", editsN:"Änderungen entfernt", nm_head:"Namensbedeutung", mn_head:"Eselsbrücke",
+  prog_title:"Fortschritt", prog_intro:"Dein Lernstand wird lokal in diesem Browser gespeichert (wie ein Cookie, aber größer). Exportiere ihn als Datei, um ihn zu sichern oder auf ein anderes Gerät zu übertragen.",
+  st_learned:"Gelernt", st_seen:"In Arbeit", st_due:"Fällig",
+  io_export:"Exportieren (Datei)", io_import_file:"Datei importieren", io_paste:"…oder JSON hier einfügen und übernehmen", io_apply:"Übernehmen", io_reset:"Fortschritt zurücksetzen",
+  io_ok:"Importiert:", io_items:"Einträge", io_bad:"Keine gültige Fortschritts-Datei.", io_reset_ok:"Fortschritt zurückgesetzt.", io_close:"Schließen", io_reset_confirm:"Wirklich den gesamten Lernfortschritt löschen?"
+});
+Object.assign(UI.en,{
+  n_learn:"Learn", d_learn:"Review at the right spacing — until it sticks", c_due:"due",
+  eb_learn:"Spaced repetition", lead_learn:"Cards return at growing intervals — the surer you are, the rarer they come. Short sessions, lasting effect.",
+  ln_due:"Due", ln_new:"New", ln_learned:"Learned", ln_start:"Start session", ln_none:"Nothing due — all caught up for now. Come back later.",
+  ln_addnew:"Add new cards", ln_of:"of", ln_left:"left", ln_done_t:"Session done!", ln_done_s:"cards this round", ln_again_btn:"Keep learning", ln_home_btn:"Back to overview",
+  g_again:"Again", g_hard:"Hard", g_good:"Good", g_easy:"Easy",
+  g_again_s:"< 1 min", g_hard_s:"shorter", showans:"Show answer", knew:"I knew it", didnt:"I didn't",
+  yourans:"You typed", correct_w:"Correct", edits1:"edit away", editsN:"edits away", nm_head:"Name meaning", mn_head:"Memory hook",
+  prog_title:"Progress", prog_intro:"Your progress is saved locally in this browser (like a cookie, but larger). Export it as a file to back it up or move it to another device.",
+  st_learned:"Learned", st_seen:"In progress", st_due:"Due",
+  io_export:"Export (file)", io_import_file:"Import file", io_paste:"…or paste JSON here and apply", io_apply:"Apply", io_reset:"Reset progress",
+  io_ok:"Imported:", io_items:"items", io_bad:"Not a valid progress file.", io_reset_ok:"Progress reset.", io_close:"Close", io_reset_confirm:"Really delete all learning progress?"
+});
 let LANG=localStorage.getItem("lang")==="en"?"en":"de";
 {const m=location.search.match(/[?&]lang=(de|en)/);if(m){LANG=m[1];localStorage.setItem("lang",LANG);}}
 function t(k){return (UI[LANG]&&UI[LANG][k]!=null)?UI[LANG][k]:(UI.de[k]!=null?UI.de[k]:k);}
@@ -315,6 +400,7 @@ function render(){
   if(h==="#/pflanzen") return renderPflanzen();
   if(h.startsWith("#/p/")) return renderPlant(+h.slice(4));
   if(h==="#/test") return renderTest();
+  if(h==="#/lernen") return renderLearn();
   if(h==="#/merk") return renderMerk();
   if(h==="#/themen") return renderThemen();
   if(h==="#/werkzeuge") return renderWerk();
@@ -327,6 +413,7 @@ window.addEventListener("hashchange",render);
 function renderHome(){
   const toolCount=WERK.reduce((a,b)=>a+b.t.length,0);
   const items=[
+    {n:t("n_learn"),d:t("d_learn"),c:srsCounts().due+" "+t("c_due"),r:"#/lernen"},
     {n:t("n_plants"),d:t("d_plants"),c:PLANTS.length+" "+t("c_species"),r:"#/pflanzen"},
     {n:t("n_test"),d:t("d_test"),c:TESTPOOL.length+" "+t("c_tested"),r:"#/test"},
     {n:t("n_merk"),d:t("d_merk"),c:MERK.length+" "+t("c_groups"),r:"#/merk"},
@@ -415,6 +502,7 @@ function renderTest(){
       '<input id="ans" class="answer-in" type="text" placeholder="'+escA(t("ph_binom"))+'" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="'+escA(t("ph_binom"))+'">'+
       '<div class="gauge"><div class="gauge-fill" id="fill"></div><div class="gauge-ticks"></div></div>'+
       '<div class="readout"><span class="big" id="pct">—</span><span class="lbl">'+esc(t("match"))+'</span></div>'+
+      '<div class="editsaway" id="edits"></div>'+
       '<div id="vbox" aria-live="polite"></div>'+
       '<div class="btnrow" style="justify-content:center">'+
         '<button class="btn btn-solid" id="check">'+esc(t("b_check"))+'</button>'+
@@ -425,10 +513,12 @@ function renderTest(){
       vbox=document.getElementById("vbox"),check=document.getElementById("check"),
       next=document.getElementById("next"),skip=document.getElementById("skip");
     upd();ans.focus();
+    const edits=document.getElementById("edits");
     ans.addEventListener("input",()=>{if(revealed)return;
       const s=similarity(ans.value,p.bot),v=Math.round(s*100);
       fill.style.width=v+"%";fill.style.background=s>=.9?"var(--ok)":s>=.6?"var(--signal)":"var(--bad)";
-      pct.textContent=ans.value.trim()?v:"—";});
+      pct.textContent=ans.value.trim()?v:"—";
+      edits.textContent=editsAwayText(ans.value,p.bot);});
     ans.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();revealed?next.click():doCheck();}});
     check.onclick=doCheck; skip.onclick=()=>reveal(false,true,0);
     next.onclick=()=>{i=(i+1)%deck.length;if(i===0)deck=shuffle(deck);show();};
@@ -436,10 +526,11 @@ function renderTest(){
     function reveal(ok,skipped,s){
       revealed=true;done++;if(ok)right++;
       check.hidden=true;skip.hidden=true;next.hidden=false;ans.disabled=true;next.focus();
-      const v=Math.round((s||0)*100);fill.style.width=v+"%";fill.style.background=ok?"var(--ok)":"var(--bad)";pct.textContent=v;
+      const v=Math.round((s||0)*100);fill.style.width=v+"%";fill.style.background=ok?"var(--ok)":"var(--bad)";pct.textContent=v;edits.textContent="";
       vbox.innerHTML='<div class="verdict '+(ok?"verdict-ok":"verdict-no")+'">'+
-        (skipped?t("v_skip"):ok?t("v_ok"):t("v_no"))+'<div class="sol">'+esc(p.bot)+'</div></div>';
-      upd();}
+        (skipped?t("v_skip"):ok?t("v_ok"):t("v_no"))+'<div class="sol">'+esc(p.bot)+'</div></div>'+
+        feedbackHTML(skipped?"":ans.value,p.bot);
+      bindTips();upd();}
     function upd(){document.getElementById("score").textContent=t("sc_right")+" "+right+" / "+done+"  ·  "+t("sc_card")+" "+(i+1)+" "+t("sc_of")+" "+deck.length;}
   }
   show();
@@ -531,6 +622,194 @@ function renderWerk(){
     cnt.textContent=n+" / "+total+" "+t("of_tools")+" · 4 "+t("boxes");}
   q.addEventListener("input",draw);draw();
 }
+
+/* ================= storage (localStorage + in-memory fallback) ================= */
+const SKEY="galabau-srs-v1";
+let MEM=null;
+function nowMs(){return Date.now();}
+function readStore(){
+  if(MEM) return MEM;
+  try{const s=localStorage.getItem(SKEY);if(s)MEM=JSON.parse(s);}catch(e){}
+  if(!MEM||typeof MEM!=="object"||!MEM.items) MEM={v:1,items:{},updated:0};
+  return MEM;
+}
+function saveStore(){const o=readStore();o.updated=nowMs();try{localStorage.setItem(SKEY,JSON.stringify(o));}catch(e){}}
+
+/* ================= spaced-repetition engine (SM-2-lite / Leitner) ================= */
+const DAY=86400000;
+const IVL=[0,1,3,7,16,35,90];   /* days by level; tuned per the retention research */
+const MASTER=5, NEW_PER_SESSION=8, SESSION_MAX=20, RELEARN_MS=9*60000;
+function ivlMs(l){return l<=0?RELEARN_MS:IVL[Math.min(l,IVL.length-1)]*DAY;}
+function grade(id,g){/* g: 0 again,1 hard,2 good,3 easy */
+  const S=readStore();const cur=S.items[id]||{l:0,r:0,lp:0};let l=cur.l||0;
+  if(g===0){l=0;cur.lp=(cur.lp||0)+1;}
+  else if(g===1){l=Math.max(1,l);}
+  else if(g===2){l=l+1;}
+  else{l=l+2;}
+  l=Math.min(l,IVL.length-1);
+  cur.l=l;cur.r=(cur.r||0)+1;cur.seen=1;
+  cur.due=nowMs()+((g===1&&l>0)?ivlMs(l)*0.6:ivlMs(l));
+  S.items[id]=cur;saveStore();
+}
+function srsCounts(){
+  const S=readStore(),now=nowMs();let due=0,learned=0,seen=0;
+  for(const it of ITEMS){const s=S.items[it.id];if(s){seen++;if((s.l||0)>=MASTER)learned++;if((s.due||0)<=now)due++;}}
+  return {due,learned,seen,newAvail:ITEMS.length-seen,total:ITEMS.length};
+}
+function buildQueue(addNew){
+  const S=readStore(),now=nowMs();
+  const due=ITEMS.filter(it=>{const s=S.items[it.id];return s&&(s.due||0)<=now;})
+    .sort((a,b)=>(S.items[a.id].due||0)-(S.items[b.id].due||0));
+  let q=due.slice(0,SESSION_MAX);
+  if(addNew||q.length===0){q=q.concat(ITEMS.filter(it=>!S.items[it.id]).slice(0,NEW_PER_SESSION));}
+  return shuffle(q).slice(0,SESSION_MAX);
+}
+
+/* ================= typed-answer feedback: letter diff + name meaning ================= */
+function alignOps(a,b){
+  const eq=(x,y)=>x.toLowerCase()===y.toLowerCase();
+  const m=a.length,n=b.length,dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++)dp[i][0]=i;
+  for(let j=0;j<=n;j++)dp[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++){const c=eq(a[i-1],b[j-1])?0:1;
+    dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+c);}
+  let i=m,j=n;const ops=[];
+  while(i>0||j>0){
+    if(i>0&&j>0&&dp[i][j]===dp[i-1][j-1]+(eq(a[i-1],b[j-1])?0:1)){ops.push({op:eq(a[i-1],b[j-1])?"match":"sub",a:a[i-1],b:b[j-1]});i--;j--;}
+    else if(i>0&&dp[i][j]===dp[i-1][j]+1){ops.push({op:"ins",a:a[i-1]});i--;}
+    else{ops.push({op:"del",b:b[j-1]});j--;}
+  }
+  return ops.reverse();
+}
+function editsAwayText(user,bot){const u=normBot(user);if(!u)return "";const d=lev(u,normBot(bot));
+  return d<=0?"":d+" "+(d===1?t("edits1"):t("editsN"));}
+function feedbackHTML(userText,bot){
+  const ops=alignOps((userText||"").trim(),bot);
+  const sp=ch=>ch===" "?" ":esc(ch);
+  const target=ops.filter(o=>o.op!=="ins").map(o=>'<span class="'+(o.op==="match"?"d-ok":"d-miss")+'">'+sp(o.b)+'</span>').join("");
+  const yours=ops.filter(o=>o.op!=="del").map(o=>'<span class="'+(o.op==="match"?"d-ok":"d-bad")+'">'+sp(o.a)+'</span>').join("");
+  const nm=NAMEMEAN[bot];let mean="";
+  if(nm){const meaning=L(nm.meaning_de,nm.meaning_en),mn=L(nm.mnemonic_de,nm.mnemonic_en);
+    if(meaning) mean='<div class="meaningbox"><b>'+t("nm_head")+'</b>'+esc(meaning)+
+      (mn?'<div class="mm"><b>'+t("mn_head")+'</b>'+esc(mn)+'</div>':"")+'</div>';}
+  return '<div class="diffline"><span class="lbl">'+t("correct_w")+'</span>'+target+'</div>'+
+    ((userText||"").trim()?'<div class="diffline"><span class="lbl">'+t("yourans")+'</span>'+yours+'</div>':"")+mean;
+}
+
+/* ================= Learn (spaced repetition) ================= */
+function renderLearn(){
+  const c=srsCounts();const pct=c.total?Math.round(c.learned/c.total*100):0;let body;
+  if(c.due>0) body='<button class="btn btn-solid" id="startBtn" style="font-size:.95rem;padding:14px 24px">'+t("ln_start")+' · '+c.due+'</button>';
+  else if(c.newAvail>0) body='<p class="lead">'+esc(t("ln_none"))+'</p><button class="btn btn-solid" id="startBtn">'+t("ln_addnew")+'</button>';
+  else body='<div class="done-emo">✓</div><p class="lead" style="text-align:center">'+esc(t("ln_none"))+'</p>';
+  app.innerHTML=
+    '<p class="eyebrow">'+esc(t("eb_learn"))+'</p><h2 class="disp" style="font-size:1.7rem;margin:0">'+esc(t("n_learn"))+'</h2>'+
+    '<p class="lead">'+esc(t("lead_learn"))+'</p>'+
+    '<div class="statrow">'+
+      '<div class="stat"><div class="v">'+c.due+'</div><div class="k">'+t("ln_due")+'</div></div>'+
+      '<div class="stat"><div class="v">'+c.newAvail+'</div><div class="k">'+t("ln_new")+'</div></div>'+
+      '<div class="stat"><div class="v">'+c.learned+'</div><div class="k">'+t("ln_learned")+'</div></div></div>'+
+    '<div class="progbar masterbar"><span style="width:'+pct+'%"></span></div>'+
+    '<p class="count">'+c.learned+' / '+c.total+'</p>'+
+    '<div style="margin-top:20px">'+body+'</div>';
+  const sb=document.getElementById("startBtn");
+  if(sb) sb.onclick=()=>{const q=buildQueue(c.due===0);q.length?runSession(q):renderLearn();};
+}
+function runSession(queue){
+  let idx=0,reviewed=0;
+  function finish(){
+    app.innerHTML='<div class="done-emo">✓</div>'+
+      '<h2 class="disp" style="font-size:1.5rem;text-align:center;margin:.2em 0">'+t("ln_done_t")+'</h2>'+
+      '<p class="count" style="text-align:center">'+reviewed+' '+t("ln_done_s")+'</p>'+
+      '<div class="btnrow" style="justify-content:center;margin-top:18px">'+
+        '<button class="btn btn-solid" id="again">'+t("ln_again_btn")+'</button>'+
+        '<a class="btn" href="#/">'+t("ln_home_btn")+'</a></div>';
+    const a=document.getElementById("again");if(a)a.onclick=renderLearn;}
+  function step(){if(idx>=queue.length)return finish();const it=queue[idx];
+    (it.type==="vocab"?showVocab:showConcept)(it,idx+1,queue.length,()=>{idx++;reviewed++;step();});}
+  step();
+}
+function showVocab(it,pos,total,done){
+  const p=it.plant;let revealed=false;
+  app.innerHTML='<p class="count">'+pos+' / '+total+'</p><div class="learncard">'+
+    (p.img?'<img class="qphoto" src="'+p.img+'" alt="">':"")+
+    '<div class="plate" style="margin-bottom:14px"><div class="de disp" style="font-size:1.4rem">'+esc(p.de)+'</div>'+
+    '<div class="meta mono" style="font-size:.74rem;opacity:.75;margin-top:6px">'+esc(p.fam||"—")+'</div></div>'+
+    '<input id="ans" class="answer-in" type="text" placeholder="'+escA(t("ph_binom"))+'" autocomplete="off" autocapitalize="off" spellcheck="false">'+
+    '<div class="gauge"><div class="gauge-fill" id="fill"></div><div class="gauge-ticks"></div></div>'+
+    '<div class="readout"><span class="big" id="pct">—</span><span class="lbl">'+t("match")+'</span></div>'+
+    '<div class="editsaway" id="edits"></div><div id="vbox" aria-live="polite"></div>'+
+    '<div class="btnrow" style="justify-content:center">'+
+      '<button class="btn btn-solid" id="check">'+t("b_check")+'</button>'+
+      '<button class="btn btn-solid" id="next" hidden>'+t("b_next")+'</button></div></div>';
+  const ans=document.getElementById("ans"),fill=document.getElementById("fill"),pct=document.getElementById("pct"),
+    edits=document.getElementById("edits"),vbox=document.getElementById("vbox"),
+    check=document.getElementById("check"),next=document.getElementById("next");
+  ans.focus();
+  ans.addEventListener("input",()=>{if(revealed)return;const s=similarity(ans.value,p.bot),v=Math.round(s*100);
+    fill.style.width=v+"%";fill.style.background=s>=.9?"var(--ok)":s>=.6?"var(--signal)":"var(--bad)";
+    pct.textContent=ans.value.trim()?v:"—";edits.textContent=editsAwayText(ans.value,p.bot);});
+  ans.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();revealed?next.click():doCheck();}});
+  check.onclick=doCheck;next.onclick=done;
+  function doCheck(){const s=similarity(ans.value,p.bot),ok=s>=0.9;revealed=true;grade(it.id,ok?2:0);
+    check.hidden=true;next.hidden=false;ans.disabled=true;next.focus();
+    const v=Math.round(s*100);fill.style.width=v+"%";fill.style.background=ok?"var(--ok)":"var(--bad)";pct.textContent=v;edits.textContent="";
+    vbox.innerHTML='<div class="verdict '+(ok?"verdict-ok":"verdict-no")+'">'+(ok?t("v_ok"):t("v_no"))+
+      '<div class="sol">'+esc(p.bot)+'</div></div>'+feedbackHTML(ans.value,p.bot);bindTips();}
+}
+function showConcept(it,pos,total,done){
+  const card=it.card,front=L(card.front_de,card.front_en),back=L(card.back_de,card.back_en);
+  app.innerHTML='<p class="count">'+pos+' / '+total+'</p><div class="learncard">'+
+    '<div class="plate" style="margin-bottom:6px"><div style="font-size:1.15rem;line-height:1.4">'+esc(front)+'</div></div>'+
+    '<div id="rev"></div>'+
+    '<div class="btnrow" style="justify-content:center" id="showrow"><button class="btn btn-solid" id="showb">'+t("showans")+'</button></div></div>';
+  document.getElementById("showb").onclick=()=>{document.getElementById("showrow").hidden=true;
+    document.getElementById("rev").innerHTML='<div class="cardback">'+esc(back)+'</div>'+
+      '<div class="grades">'+
+        '<button class="g-again" data-g="0">'+t("g_again")+'<small>'+t("g_again_s")+'</small></button>'+
+        '<button class="g-hard" data-g="1">'+t("g_hard")+'<small>'+t("g_hard_s")+'</small></button>'+
+        '<button class="g-good" data-g="2">'+t("g_good")+'</button>'+
+        '<button class="g-easy" data-g="3">'+t("g_easy")+'</button></div>';
+    document.querySelector(".grades").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;grade(it.id,+b.dataset.g);done();});};
+}
+
+/* ================= progress panel (export / import, every page) ================= */
+function exportProgress(){try{
+  const blob=new Blob([JSON.stringify(readStore(),null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);const a=document.createElement("a");
+  a.href=url;a.download="galabau-fortschritt.json";document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},800);
+}catch(e){}}
+function applyImport(text,msg){let o;try{o=JSON.parse(text);}catch(e){o=null;}
+  if(!o||typeof o!=="object"||!o.items||typeof o.items!=="object"){msg.className="msg bad";msg.textContent=t("io_bad");return;}
+  MEM={v:1,items:o.items,updated:nowMs()};saveStore();
+  msg.className="msg ok";msg.textContent=t("io_ok")+" "+Object.keys(o.items).length+" "+t("io_items");
+  const c=srsCounts(),v=document.querySelectorAll(".sheet .stat .v");if(v[0]){v[0].textContent=c.learned;v[1].textContent=c.seen;v[2].textContent=c.due;}}
+function openPanel(){
+  const c=srsCounts(),sheet=document.getElementById("sheet"),ov=document.getElementById("overlay");
+  sheet.innerHTML=
+    '<h3>'+t("prog_title")+'</h3><p class="lead" style="margin:.3em 0 0;font-size:.86rem">'+esc(t("prog_intro"))+'</p>'+
+    '<div class="statrow">'+
+      '<div class="stat"><div class="v">'+c.learned+'</div><div class="k">'+t("st_learned")+'</div></div>'+
+      '<div class="stat"><div class="v">'+c.seen+'</div><div class="k">'+t("st_seen")+'</div></div>'+
+      '<div class="stat"><div class="v">'+c.due+'</div><div class="k">'+t("st_due")+'</div></div></div>'+
+    '<div class="btnrow"><button class="btn btn-solid" id="ioExport">'+t("io_export")+'</button>'+
+      '<label class="btn" style="cursor:pointer">'+t("io_import_file")+'<input type="file" id="ioFile" accept="application/json,.json" hidden></label></div>'+
+    '<div class="iobox"><textarea id="ioPaste" placeholder="'+escA(t("io_paste"))+'"></textarea>'+
+      '<div class="btnrow"><button class="btn" id="ioApply">'+t("io_apply")+'</button>'+
+      '<button class="btn" id="ioReset">'+t("io_reset")+'</button>'+
+      '<button class="btn" id="ioClose" style="margin-left:auto">'+t("io_close")+'</button></div>'+
+      '<div class="msg" id="ioMsg"></div></div>';
+  ov.hidden=false;const msg=document.getElementById("ioMsg");
+  document.getElementById("ioExport").onclick=exportProgress;
+  document.getElementById("ioFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>applyImport(r.result,msg);r.readAsText(f);};
+  document.getElementById("ioApply").onclick=()=>applyImport(document.getElementById("ioPaste").value,msg);
+  document.getElementById("ioReset").onclick=()=>{if(window.confirm(t("io_reset_confirm"))){MEM={v:1,items:{},updated:nowMs()};saveStore();msg.className="msg ok";msg.textContent=t("io_reset_ok");const v=document.querySelectorAll(".sheet .stat .v");v[0].textContent=0;v[1].textContent=0;v[2].textContent=0;}};
+  document.getElementById("ioClose").onclick=closePanel;
+}
+function closePanel(){document.getElementById("overlay").hidden=true;const h=location.hash||"#/";if(h==="#/"||h==="#/lernen")render();}
+document.getElementById("progBtn").onclick=openPanel;
+document.getElementById("overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closePanel();});
 
 syncLangUI();
 render();

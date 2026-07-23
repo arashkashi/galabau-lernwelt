@@ -15,6 +15,11 @@ Lernmaterial aus meiner GaLaBau-Umschulung — **nur was im Unterricht, im Prakt
 Die Park-Arten wurden anhand der Fotos bestimmt (KI-gestützt). Was als „prüfen" oder „unsicher" markiert ist, gehört im Unterricht gegengecheckt und wird **nicht** im Namen-Test abgefragt.
 
 
+## Lernen (Spaced Repetition) / Learn
+Ein Wiederholungs-System mit wachsenden Abständen: Pflanzennamen tippt man (Levenshtein-Feedback zeigt den genauen Buchstaben-Fehler, dazu Namensbedeutung + Eselsbrücke), Konzepte prüft man als Karteikarten mit Selbsteinschätzung (Nochmal/Schwer/Gut/Leicht). Der Fortschritt wird **lokal im Browser** gespeichert (wie ein Cookie, aber größer) und lässt sich über das **⇅-Symbol auf jeder Seite als Datei exportieren/importieren** — so ist er sicherbar und auf andere Geräte übertragbar.
+
+A spaced-repetition system: plant names are typed (Levenshtein feedback pinpoints the exact letter error, plus name meaning + mnemonic); concepts are self-rated flashcards (Again/Hard/Good/Easy). Progress is stored **locally in the browser** (like a cookie, but larger) and can be **exported/imported as a file via the ⇅ icon on every page** — so it is backup-able and portable across devices.
+
 ## Sprachen / Languages
 Die Seite ist zweisprachig **Deutsch/Englisch**. Der Umschalter oben rechts (DE/EN) ist auf jeder Seite verfügbar und merkt sich die Wahl; ein direkter Link geht auch mit `?lang=en`. Pflanzennamen (deutsch + botanisch) bleiben immer sichtbar — sie sind der Lernstoff.
 
