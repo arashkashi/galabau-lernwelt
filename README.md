@@ -14,6 +14,12 @@ Lernmaterial aus meiner GaLaBau-Umschulung — **nur was im Unterricht, im Prakt
 ## Hinweis zur Pflanzenbestimmung
 Die Park-Arten wurden anhand der Fotos bestimmt (KI-gestützt). Was als „prüfen" oder „unsicher" markiert ist, gehört im Unterricht gegengecheckt und wird **nicht** im Namen-Test abgefragt.
 
+
+## Sprachen / Languages
+Die Seite ist zweisprachig **Deutsch/Englisch**. Der Umschalter oben rechts (DE/EN) ist auf jeder Seite verfügbar und merkt sich die Wahl; ein direkter Link geht auch mit `?lang=en`. Pflanzennamen (deutsch + botanisch) bleiben immer sichtbar — sie sind der Lernstoff.
+
+The site is bilingual **German/English**. The DE/EN switch (top right) is on every page and is remembered; a direct link works with `?lang=en`. Plant names (German + botanical) always stay visible — they are the vocabulary to learn.
+
 ## Gestaltung
 Die Oberfläche greift die Materialwelt des Berufs auf: das Emailleschild aus dem Park als Pflanzenkarte, die Erdschicht-Linie als Trenner und der Maßstab als Anzeige im Namen-Test. Systemschriften, keine externen Dateien.
 
