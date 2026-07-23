@@ -210,6 +210,16 @@ mark{background:var(--signal);color:#fff;border-radius:2px;padding:0 3px}
 .meaningbox{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin-top:12px;font-size:.9rem}
 .meaningbox .mm{color:var(--muted);margin-top:6px}
 .meaningbox b{font-family:var(--display);text-transform:uppercase;letter-spacing:.06em;font-size:.68rem;color:var(--muted);display:block;margin-bottom:3px;font-weight:700}
+
+/* ---- image lightbox (tap to enlarge) ---- */
+img.zoom{cursor:zoom-in}
+.lightbox{position:fixed;inset:0;z-index:60;background:rgba(8,10,8,.93);display:flex;align-items:center;justify-content:center;padding:14px;cursor:zoom-out}
+.lightbox[hidden]{display:none}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:4px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.lb-close{position:absolute;top:14px;right:16px;width:42px;height:42px;border-radius:99px;border:1px solid rgba(255,255,255,.45);
+  background:rgba(0,0,0,.45);color:#fff;font-size:1.15rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lb-cap{position:absolute;left:0;right:0;bottom:0;padding:14px 18px calc(14px + env(safe-area-inset-bottom));color:#fff;
+  font-family:var(--serif);font-style:italic;font-size:.95rem;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.55))}
 </style>
 </head>
 <body>
@@ -220,6 +230,7 @@ mark{background:var(--signal);color:#fff;border-radius:2px;padding:0 3px}
   <button class="back" id="backBtn" hidden>←</button>
 </div></div>
 <main id="app"></main>
+<div class="lightbox" id="lightbox" hidden><button class="lb-close" id="lbClose" aria-label="close">✕</button><img id="lbImg" alt=""><div class="lb-cap" id="lbCap"></div></div>
 <div class="overlay" id="overlay" hidden><div class="sheet" id="sheet"></div></div>
 <footer id="foot"></footer>
 
@@ -472,7 +483,7 @@ function renderPlant(idx){
   if(p.cats.includes("trep")) conf = p.conf==="high"?t("conf_ok"):p.conf==="medium"?t("conf_check"):t("conf_unsure");
   const merk=prose(c.merkmal,c.merkmal_en,c.terms), tipp=prose(c.tipp,c.tipp_en,c.terms);
   app.innerHTML=
-    (p.img?'<img class="dphoto" src="'+p.img+'" alt="'+escA(p.de)+'">':"")+
+    (p.img?'<img class="dphoto zoom" src="'+p.img+'" alt="'+escA(p.de)+'" data-cap="'+escA(p.de+" · "+p.bot)+'">':"")+
     (p.credit?'<p class="photocredit">'+t("photo_by")+' '+esc(p.credit.artist||"—")+', <a href="'+p.credit.page+'" target="_blank" rel="noopener">'+esc(p.credit.lic)+'</a> · Wikimedia Commons</p>':"")+
     '<div class="plate dplate"><div class="de">'+esc(p.de)+'</div>'+
     '<div class="bo">'+esc(p.bot)+'</div>'+
@@ -496,7 +507,7 @@ function renderTest(){
   function show(){
     const p=deck[i];revealed=false;
     box.innerHTML=
-      (p.img?'<img class="qphoto" src="'+p.img+'" alt="">':"")+
+      (p.img?'<img class="qphoto zoom" src="'+p.img+'" alt="" data-cap="'+escA(p.de)+'">':"")+
       '<div class="plate" style="margin-bottom:14px"><div class="de disp" style="font-size:1.4rem">'+esc(p.de)+'</div>'+
       '<div class="meta mono" style="font-size:.74rem;opacity:.75;margin-top:6px">'+esc(p.fam||"—")+'</div></div>'+
       '<input id="ans" class="answer-in" type="text" placeholder="'+escA(t("ph_binom"))+'" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="'+escA(t("ph_binom"))+'">'+
@@ -732,7 +743,7 @@ function runSession(queue){
 function showVocab(it,pos,total,done){
   const p=it.plant;let revealed=false;
   app.innerHTML='<p class="count">'+pos+' / '+total+'</p><div class="learncard">'+
-    (p.img?'<img class="qphoto" src="'+p.img+'" alt="">':"")+
+    (p.img?'<img class="qphoto zoom" src="'+p.img+'" alt="" data-cap="'+escA(p.de)+'">':"")+
     '<div class="plate" style="margin-bottom:14px"><div class="de disp" style="font-size:1.4rem">'+esc(p.de)+'</div>'+
     '<div class="meta mono" style="font-size:.74rem;opacity:.75;margin-top:6px">'+esc(p.fam||"—")+'</div></div>'+
     '<input id="ans" class="answer-in" type="text" placeholder="'+escA(t("ph_binom"))+'" autocomplete="off" autocapitalize="off" spellcheck="false">'+
@@ -810,6 +821,14 @@ function openPanel(){
 function closePanel(){document.getElementById("overlay").hidden=true;const h=location.hash||"#/";if(h==="#/"||h==="#/lernen")render();}
 document.getElementById("progBtn").onclick=openPanel;
 document.getElementById("overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closePanel();});
+
+/* ================= image lightbox ================= */
+function openLightbox(src,cap){const lb=document.getElementById("lightbox");
+  document.getElementById("lbImg").src=src;document.getElementById("lbCap").textContent=cap||"";lb.hidden=false;}
+function closeLightbox(){const lb=document.getElementById("lightbox");if(lb.hidden)return;lb.hidden=true;document.getElementById("lbImg").removeAttribute("src");}
+document.addEventListener("click",e=>{const z=e.target.closest("img.zoom");if(z){e.preventDefault();openLightbox(z.getAttribute("src"),z.getAttribute("data-cap")||z.getAttribute("alt"));}});
+document.getElementById("lightbox").addEventListener("click",closeLightbox);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLightbox();});
 
 syncLangUI();
 render();
